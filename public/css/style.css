@@ -6,3 +6,7 @@
 body {
 	background-color: black;
 }
+
+header nav div {
+	display: inline-block;
+}
