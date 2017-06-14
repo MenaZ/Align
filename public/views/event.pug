@@ -10,9 +10,9 @@ html
 			div
 				a(href= "/profile") Go to your profile!
 			div
-				a(href= '/myposts') View all your posts!
+				a(href= '/myevents') View all your posts!
 			div
-				a(href='/post') View all posts!
+				a(href='/event') View all posts!
 		h1 All posts
 		each event in events
 			each user in users
@@ -28,7 +28,7 @@ html
 					form(action='/comment' method='post')
 						h4 Comment:
 						textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-						input(type='hidden' name='messageId' value=post.id)
+						input(type='hidden' name='eventId' value=post.id)
 						br
 						br
 						input(type='submit' value='Submit your comment!')
@@ -38,8 +38,12 @@ html
 		form(action='/event' method='post')
 			h3 Title:
 			input(name= 'title' id='title' placeholder= 'Type your title')
-			h3 Descripe this event:
-			textarea(name= 'description' id='textbox' placeholder= 'Type your message')
+			h3 Describe this event:
+			textarea(name= 'description' id='description' placeholder= 'Type your message')
+			h3 Where is this event located?
+			textarea(name='location' id='location' placeholder= 'Type the adress.')
+			h3 When is this event?
+			input(type='date')
 			br
 			br
 			input(type= 'submit' value= "Submit your post!")
