@@ -1,0 +1,14 @@
+html
+	head
+		title Profile
+	body
+		nav
+			div
+				a(href="/logout") Log Out
+			div
+				a(href="/") Index
+		h1 Welcome to your profile #{user.firstname}!
+		h2
+			a(href='/events') Click here to view all events!
+		h2
+			a(href='/myevents') Click to view all the events you posted!
