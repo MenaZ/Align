@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
 
+
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
