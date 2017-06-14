@@ -18,7 +18,7 @@ const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.e
 
 app.use('/', bodyParser());
 
-app.set('views', './');
+app.set('views', 'views');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
 
@@ -59,3 +59,59 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+// go to the register page
+app.get('/register', (req, res) => {
+    res.render('register', {
+    });
+});
+app.post('/register', (req, res) => {
+	var user = request.session.user;
+	User.sync()
+	.then(() => {
+
+	// check email im DB
+		User.findOne({
+			where: {
+					email: req.body.email
+			}
+		})
+		.then(() => {
+			if(user !== null && req.body.email=== user.email) {
+        		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
+				return;
+			}
+			else{
+				bcrypt.hash(req.body.password, null, null, (err, hash) =>{
+					if (err) {
+						throw err
+					}
+					User.sync()
+					.then(() => {
+						User.create({
+							firstname: req.body.firstname,
+							lastname: req.body.lastname,
+							email: req.body.email,
+							age: req.body.age,
+							gender: req.body.gender,
+							password: hash,
+							aboutme: req.body.aboutme
+						})
+					})
+					.then(() =>{
+						res.redirect('views/login')
+					})
+					.then().catch(error=> console.log(error))
+				})
+			}
+		})
+		.then().catch(error => console.log(error))
+	})
+	.then().catch(error => console.log(error))
+})
+
+
+
+
+var server = app.listen(3000, function () {
+    console.log('Example app listening on port: ' + server.address().port);
+});

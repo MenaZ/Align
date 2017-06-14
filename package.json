@@ -1,0 +1,29 @@
+{
+  "name": "alignapp",
+  "version": "1.0.0",
+  "description": "Very nice app for meeting with people to go to events! Toll! Genau!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MenaZ/Align.git"
+  },
+  "keywords": [
+    "Buddy",
+    "Align",
+    "Events",
+    "Fun!"
+  ],
+  "author": "Iuliia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MenaZ/Align/issues"
+  },
+  "homepage": "https://github.com/MenaZ/Align#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "express": "^4.15.3"
+  }
+}
