@@ -83,7 +83,7 @@ app.post('/register', (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then(() => {
+		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
