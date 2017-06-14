@@ -76,6 +76,7 @@ app.get('/register', (req, res) => {
     });
 });
 
+
 app.post('/register', (req, res) => {
 	// check email im DB
 		User.findOne({
