@@ -2,48 +2,53 @@ html
 	head
 		title Post an event
 	body
-		nav
-			div
-				a(href= "/logout") Logout
-			div
-				a(href= "/") Index
-			div
-				a(href= "/profile") Go to your profile!
-			div
-				a(href= '/myevents') View all your posts!
-			div
-				a(href='/event') View all posts!
-		h1 All posts
-		each event in events
-			each user in users
-				if event.userId===user.id
-					h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
-					h3 #{event.title}
-					p #{event.description}
-					each comment in event.comments
-						each user in users
-							if comment.userId === user.id
-								h4 #{user.firstname} #{user.lastname} commented:
-								p #{comment.body}
-					form(action='/comment' method='post')
-						h4 Comment:
-						textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-						input(type='hidden' name='eventId' value=post.id)
-						br
-						br
-						input(type='submit' value='Submit your comment!')
-		else
-			h2 You haven't posted anything yet!
-		h2 Post your awesome event!
-		form(action='/event' method='post')
-			h3 Title:
-			input(name= 'title' id='title' placeholder= 'Type your title')
-			h3 Describe this event:
-			textarea(name= 'description' id='description' placeholder= 'Type your message')
-			h3 Where is this event located?
-			textarea(name='location' id='location' placeholder= 'Type the adress.')
-			h3 When is this event?
-			input(type='date')
-			br
-			br
-			input(type= 'submit' value= "Submit your post!")
+		header
+			nav
+				div
+					a(href= "/logout") Logout
+				div
+					a(href= "/") Home
+				div
+					a(href= "/profile") Go to your profile!
+				div
+					a(href= '/myposts') View all your posts!
+				div
+					a(href='/post') View all posts!
+
+		main
+			h1 All Events
+			each event in events
+				each user in users
+					if event.userId===user.id
+						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
+						h3 #{event.title}
+						p #{event.description}
+						each comment in event.comments
+							each user in users
+								if comment.userId === user.id
+									h4 #{user.firstname} #{user.lastname} commented:
+									p #{comment.body}
+						form(action='/comment' method='post')
+							h4 Comment:
+							textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+							input(type='hidden' name='eventId' value=post.id)
+							br
+							br
+							input(type='submit' value='Submit your comment!')
+			else
+				h2 You haven't posted anything yet!
+			h2 Post your awesome event!
+			form(action='/event' method='post')
+				h3 Title:
+				input(name= 'title' id='title' placeholder= 'Type your title')
+				h3 Describe this event:
+				textarea(name= 'description' id='description' placeholder= 'Type your message')
+				h3 Where is this event located?
+				textarea(name='location' id='location' placeholder= 'Type the adress.')
+				h3 When is this event?
+				input(type='date')
+				br
+				br
+				input(type= 'submit' value= "Submit your post!")
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.

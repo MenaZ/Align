@@ -1,12 +1,30 @@
 html
 	head
 		title Align
+		link(rel="stylesheet" href="../css/style.css")
 	body
-		h1 Align
-		p Meet new people, the adventurous way. 
+		header
+			nav
+				div
+					a(href= "/logout") Logout
+				div
+					a(href= "/") Home
+				div
+					a(href= "/profile") Go to your profile!
+				div
+					a(href= '/myposts') View all your posts!
+				div
+					a(href='/post') View all posts!
+		
+		main
+			h1 Align
+			p Meet new people, the adventurous way. 
 
-		h4 Core benefits
-		ul
-			li Matches based on preferences
-			li Always go to parties with a party
-			li No strings attached
+			h4 Core benefits
+			ul
+				li Matches based on preferences
+				li Always go to parties with a party
+				li No strings attached
+
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.

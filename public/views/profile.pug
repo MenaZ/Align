@@ -2,13 +2,26 @@ html
 	head
 		title Profile
 	body
-		nav
-			div
-				a(href="/logout") Log Out
-			div
-				a(href="/") Index
-		h1 Welcome to your profile #{user.firstname}!
-		h2
-			a(href='/events') Click here to view all events!
-		h2
-			a(href='/myevents') Click to view all the events you posted!
+		header
+			nav
+				div
+					a(href= "/logout") Logout
+				div
+					a(href= "/") Home
+				div
+					a(href= "/profile") Go to your profile!
+				div
+					a(href= '/myposts') View all your posts!
+				div
+					a(href='/post') View all posts!
+
+		main
+			h1 #{user.firstname}'s Profile		
+			h2 Welcome to your profile #{user.firstname}!
+			h3
+				a(href='/events') Click here to view all events!
+			h3
+				a(href='/myevents') Click to view all the events you posted!
+
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.
