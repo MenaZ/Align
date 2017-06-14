@@ -83,7 +83,7 @@ app.post('/register', (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then(() => {
+		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -106,7 +106,7 @@ app.post('/register', (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('views/login')
+						res.redirect('/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -170,15 +170,18 @@ app.get('/event', (req,res) =>{
     }
     else {
 	    Event.sync()
-	    	.then(function(){
+	    	.then(()=> {
 	    		User.findAll()
 	    			.then((users)=>{
-	    				Event.findAll({include: [{
+	    				Event.findAll(
+	    					{include: [{
 			    				model: Comment,
 			    				as: 'comments'
-			    			}],
-			    			order: '"updatedAt" DESC'
-			    		})
+			    			}]
+			    			// ,
+			    			// order: '"updatedAt" DESC'
+			    		}
+			    		)
 			    		.then((events)=>{
 			    			res.render('public/views/event', {
 			    				events: events,
@@ -192,7 +195,7 @@ app.get('/event', (req,res) =>{
 });
 
 app.post('/event', (req,res) => {
-	if(req.body.message.length===0 || req.body.title.length===0) {
+	if(req.body.description.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
 	}
