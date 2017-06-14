@@ -16,20 +16,41 @@ html
 			h1 Sign Up!
 			p Please sign up here!
 			form(method="post" action="/register")
-			label Firstname
+			label Firstname:
+			br
 			input(type="text" class="form-control" placeholder="Firstname" name="firstname" required)
-			label Lastname
+			br
+			br
+			label Lastname:
+			br
 			input(type="text" class="form-control" placeholder="Lastname" name="lastname" required)
-			abel Email
+			br
+			br
+			label Email:
+			br
 			input(type="email" class="form-control" placeholder="email" name="email" required)
-			label Age
+			br
+			br
+			label Age:
+			br
 			input(type="text" class="form-control" placeholder="Age" name="age" required)
-			label Gender
+			br
+			br
+			label Gender:
+			br
 			input(type="text" class="form-control" placeholder="Gender" name="gender" required)
-			l
-			label Password
+			br
+			br
+			label Password:
+			br
 			input(type="password" class="form-control" placeholder="password" name="password" required)
+			br
+			br
+			label Tell us about yourself:
+			br
 			textarea(name="aboutme", placeholder="Some info about me ...", rows="4", cols="50", class="message"  required)
+			br
+			br
 			button(type="submit" class="btn-default") Submit
 
 		footer
