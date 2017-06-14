@@ -7,6 +7,7 @@ const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
 
 
+
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
@@ -76,10 +77,15 @@ app.get('/register', (req, res) => {
     });
 });
 
+<<<<<<< HEAD
+
+app.post('/register', (req, res) => {
+=======
 app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 	var user = request.session.user;
 	User.sync()
 	.then(() => {
+>>>>>>> 42875cc6774ab91a35c6314fb30eb55cd005befb
 	// check email im DB
 		User.findOne({
 			where: {
