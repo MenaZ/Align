@@ -14,14 +14,30 @@ html
 				});
 			});
 	body
-		form(action='/login' method='post')
-			label Email:
-			br
-			input(id='email' name='email' required)
-			br
-			label Password:
-			br
-			input(id='password' name='password', required)
-			br
-			input(type='submit' value='login' id='submit')
-		h2#error-message= post
+		header
+			nav
+				div
+					a(href= "/") Home
+				div
+					a(href='/post') Event Calender
+				div
+					a(href='about') About
+				div
+					a(href='/contact') Contact Us
+
+		main
+			h1 Please Logig:
+			form(action='/login' method='post')
+				label Email:
+				br
+				input(id='email' name='email' required)
+				br
+				label Password:
+				br
+				input(id='password' name='password', required)
+				br
+				input(type='submit' value='login' id='submit')
+			h2#error-message= post
+
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.
