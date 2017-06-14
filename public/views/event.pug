@@ -27,7 +27,9 @@ html
 					if event.userId===user.id
 						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
 						h3 #{event.title}
-						p #{event.description}
+						p Description: #{event.description}
+						p Location: #{event.location}
+						p Date: #{event.date}
 						each comment in event.comments
 							each user in users
 								if comment.userId === user.id
@@ -36,7 +38,7 @@ html
 						form(action='/comment' method='post')
 							h4 Comment:
 							textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-							input(type='hidden' name='eventId' value=post.id)
+							input(type='hidden' name='eventId' value=event.id)
 							br
 							br
 							input(type='submit' value='Submit your comment!')
@@ -45,13 +47,13 @@ html
 			h2 Post your awesome event!
 			form(action='/event' method='post')
 				h3 Title:
-				input(name= 'title' id='title' placeholder= 'Type your title')
+				input(name= 'title' id='title' placeholder= 'Type your title' required)
 				h3 Describe this event:
-				textarea(name= 'description' id='description' placeholder= 'Type your message')
+				textarea(name= 'description' id='description' placeholder= 'Type your message' required)
 				h3 Where is this event located?
-				textarea(name='location' id='location' placeholder= 'Type the adress.')
+				textarea(name='location' id='location' placeholder= 'Type the adress.' required)
 				h3 When is this event?
-				input(type='date')
+				input(type='date' name='date' require)
 				br
 				br
 				input(type= 'submit' value= "Submit your post!")
