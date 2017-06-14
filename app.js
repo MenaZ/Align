@@ -60,6 +60,15 @@ app.use(session({
 	saveUninitialized: false
 }));
 
+// Goes to the index page, which is the homepage of the blog app
+app.get('/', function (req,res){
+	res.render('views/index', {
+		// You can also use req.session.message so message won't show in the browser
+		message: req.query.message,
+		user: req.session.user
+	});
+});
+
 app.get('/profile', (req, res)=> {
     var user = req.session.user;
     if (user === undefined) {
@@ -71,7 +80,7 @@ app.get('/profile', (req, res)=> {
     }
 });
 
-app.get('/post', (req,res) =>{
+app.get('/event', (req,res) =>{
 	var user = req.session.user;
 	if (user === undefined) {
         res.redirect('/?message=' + encodeURIComponent("Please log in to view and post messages!"));
@@ -99,7 +108,7 @@ app.get('/post', (req,res) =>{
 	}
 });
 
-app.post('/post', (req,res) => {
+app.post('/event', (req,res) => {
 	if(req.body.message.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
