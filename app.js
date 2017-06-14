@@ -35,6 +35,7 @@ var User = sequelize.define('user', {
 var Event= sequelize.define('events', {
 	title: Sequelize.STRING,
 	description: Sequelize.STRING,
+	location: Sequelize.STRING,
 	date: Sequelize.STRING
 })
 
@@ -58,3 +59,92 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+
+// Goes to the index page, which is the homepage of the blog app
+app.get('/', function (req,res){
+	res.render('views/index', {
+		// You can also use req.session.message so message won't show in the browser
+		message: req.query.message,
+		user: req.session.user
+	});
+});
+
+app.get('/profile', (req, res)=> {
+    var user = req.session.user;
+    if (user === undefined) {
+        res.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
+    } else {
+        res.render('views/profile', {
+            user: user
+        });
+    }
+});
+
+app.get('/event', (req,res) =>{
+	var user = req.session.user;
+	if (user === undefined) {
+        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post messages!"));
+    }
+    else {
+	    Event.sync()
+	    	.then(function(){
+	    		User.findAll()
+	    			.then((users)=>{
+	    				Event.findAll({include: [{
+			    				model: Comment,
+			    				as: 'comments'
+			    			}],
+			    			order: '"updatedAt" DESC'
+			    		})
+			    		.then((events)=>{
+			    			res.render('views/events', {
+			    				events: events,
+			    				users: users
+			    			})
+			    		})
+	    			})
+	    	})
+	    	.then().catch(error=> console.log(error))
+	}
+});
+
+app.post('/event', (req,res) => {
+	if(req.body.message.length===0 || req.body.title.length===0) {
+		res.end('You forgot your title or message!');
+		return
+	}
+	else {
+		Event.sync()
+			.then()
+				User.findOne({
+					where: {
+						email: req.session.user.email
+					}
+				}).then((user)=>{
+					return Event.create({
+						title: req.body.title,
+						description: req.body.description,
+						location: req.body.location,
+						date: req.body.date,
+						userId: user.id
+					})
+				}).then().catch(error=> console.log(error))
+			.then(function() {
+				res.redirect('/post');
+			})
+			.then().catch(error => console.log(error));
+	}
+})
+
+app.get('/logout', (req, res)=> {
+    req.session.destroy(function(error) {
+        if(error) {
+            throw error;
+        }
+        res.redirect('/?message=' + encodeURIComponent("Successfully logged out."));
+    })
+});
+
+var server = app.listen(3000, function() {
+  console.log('http//:localhost:' + server.address().port);
+});
