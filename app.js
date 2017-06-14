@@ -106,7 +106,7 @@ app.post('/register', (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('views/login')
+						res.redirect('/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
