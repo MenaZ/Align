@@ -4,20 +4,38 @@ html
 		link(rel="stylesheet" href="../css/style.css")
 	body
 		header
+			div#logo
+				img(src="../img/Placeholderlogo.png")
 			nav
-				div
-					a(href= "/logout") Logout
-				div
-					a(href= "/") Home
-				div
-					a(href= "/profile") Go to your profile!
-				div
-					a(href= '/myposts') View all your posts!
-				div
-					a(href='/post') View all posts!
+				if user
+					div
+						a(href= "/logout") Logout
+					div
+						a(href= "/") Home
+					div
+						a(href= "/profile") Profile
+					div
+						a(href= '/myposts') My Events
+					div
+						a(href='/post') Event Calender
+					div
+						a(href='about') About
+					div
+						a(href='/contact') Contact Us
+				else
+					div
+						a(href='/') Home
+					div
+						a(href='/post') Event Calender					
+					div
+						a(href='about') About
+					div
+						a(href='/contact') Contact Us
+
 		
 		main
 			h1 Align
+			h1 #{message}
 			p Meet new people, the adventurous way. 
 
 			h4 Core benefits

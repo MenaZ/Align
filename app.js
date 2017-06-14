@@ -60,21 +60,31 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+
+// Goes to the index page, which is the homepage of the blog app
+app.get('/', function (req,res){
+	res.render('public/views/index', {
+		// You can also use req.session.message so message won't show in the browser
+		message: req.query.message,
+		user: req.session.user
+	});
+});
+
 // go to the register page
 app.get('/register', (req, res) => {
     res.render('public/views/register')
 });
+
 app.post('/register', (req, res) => {
 	User.sync()
 	.then(() => {
-
 	// check email im DB
 		User.findOne({
 			where: {
 					email: req.body.email
 			}
 		})
-		.then(function(user) {
+		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -108,18 +118,10 @@ app.post('/register', (req, res) => {
 	.then().catch(error => console.log(error))
 })
 
+
 app.get('/login', (req, res)=> {
 	res.render('public/views/login')
 })
-
-// Goes to the index page, which is the homepage of the blog app
-app.get('/', function (req,res){
-	res.render('public/views/index', {
-		// You can also use req.session.message so message won't show in the browser
-		message: req.query.message,
-		user: req.session.user
-	});
-});
 
 app.get('/profile', (req, res)=> {
     var user = req.session.user;
@@ -136,7 +138,7 @@ app.get('/profile', (req, res)=> {
 app.get('/event', (req,res) =>{
 	var user = req.session.user;
 	if (user === undefined) {
-        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post messages!"));
+        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post events!"));
     }
     else {
 	    Event.sync()
@@ -186,6 +188,29 @@ app.post('/event', (req,res) => {
 				res.redirect('/event');
 			})
 			.then().catch(error => console.log(error));
+	}
+})
+
+app.post('/comment', (req,res)=>{
+	if(req.body.comment.length===0) {
+		res.end('You forgot your comment!')
+	}
+	else {
+		Comment.sync()
+			.then()
+				User.findOne({
+					where: {
+						email: req.session.user.email
+					}
+				}).then(user => {
+					return Comment.create({
+						body: req.body.comment,
+						eventId: req.body.eventId,
+						userId: user.id
+					})
+				}).then(function(){
+					res.redirect('/post')
+				}).then().catch(error => console.log(error));
 	}
 })
 
