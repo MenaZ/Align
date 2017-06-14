@@ -1,21 +1,36 @@
 html
 	head
 	body
-		h1 Sign Up!
-		p Please sign up here!
-		form(method="post" action="/register")
-			label Firstname
-			input(type="text" class="form-control" placeholder="Firstname" name="firstname" required)
-			label Lastname
-			input(type="text" class="form-control" placeholder="Lastname" name="lastname" required)
-			abel Email
-			input(type="email" class="form-control" placeholder="email" name="email" required)
-			label Age
-			input(type="text" class="form-control" placeholder="Age" name="age" required)
-			label Gender
-			input(type="text" class="form-control" placeholder="Gender" name="gender" required)
-			l
-			label Password
-			input(type="password" class="form-control" placeholder="password" name="password" required)
-			textarea(name="post", placeholder="Some info about me ...", rows="4", cols="50", class="message"  required)
-			button(type="submit" class="btn-default") Submit
+		header
+			nav
+				div
+					a(href= "/") Home
+				div
+					a(href='/post') Event Calender
+				div
+					a(href='about') About
+				div
+					a(href='/contact') Contact Us
+
+		main
+			h1 Sign Up!
+			p Please sign up here!
+			form(method="post" action="/register")
+				label Firstname
+				input(type="text" class="form-control" placeholder="Firstname" name="firstname" required)
+				label Lastname
+				input(type="text" class="form-control" placeholder="Lastname" name="lastname" required)
+				abel Email
+				input(type="email" class="form-control" placeholder="email" name="email" required)
+				label Age
+				input(type="text" class="form-control" placeholder="Age" name="age" required)
+				label Gender
+				input(type="text" class="form-control" placeholder="Gender" name="gender" required)
+				l
+				label Password
+				input(type="password" class="form-control" placeholder="password" name="password" required)
+				textarea(name="post", placeholder="Some info about me ...", rows="4", cols="50", class="message"  required)
+				button(type="submit" class="btn-default") Submit
+
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.

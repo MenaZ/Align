@@ -4,9 +4,11 @@
 }
 
 body {
-	background-color: black;
+	background-color: #5998ff;
 }
 
 header nav div {
 	display: inline-block;
+	margin-right: 10px;
+	background-color: #3e64a3;
 }
