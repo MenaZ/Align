@@ -62,7 +62,7 @@ app.use(session({
 
 // Goes to the index page, which is the homepage of the blog app
 app.get('/', function (req,res){
-	res.render('views/index', {
+	res.render('public/views/index', {
 		// You can also use req.session.message so message won't show in the browser
 		message: req.query.message,
 		user: req.session.user
@@ -74,7 +74,7 @@ app.get('/profile', (req, res)=> {
     if (user === undefined) {
         res.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
     } else {
-        res.render('views/profile', {
+        res.render('public/views/profile', {
             user: user
         });
     }
@@ -97,7 +97,7 @@ app.get('/event', (req,res) =>{
 			    			order: '"updatedAt" DESC'
 			    		})
 			    		.then((events)=>{
-			    			res.render('views/events', {
+			    			res.render('public/views/event', {
 			    				events: events,
 			    				users: users
 			    			})
@@ -130,7 +130,7 @@ app.post('/event', (req,res) => {
 					})
 				}).then().catch(error=> console.log(error))
 			.then(function() {
-				res.redirect('/post');
+				res.redirect('/event');
 			})
 			.then().catch(error => console.log(error));
 	}
