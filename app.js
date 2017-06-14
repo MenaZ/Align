@@ -8,7 +8,7 @@ const bcrypt= require('bcrypt-nodejs');
 
 
 // Setting up the link to the database.
-const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+const sequelize= new Sequelize('align_app', process.env.POSTGR-ES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
 	dialect: 'postgres',
 	define: {
@@ -18,7 +18,7 @@ const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.e
 
 app.use('/', bodyParser());
 
-app.set('views', 'views');
+app.set('views', './');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
 
@@ -52,7 +52,7 @@ Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
 
-sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
@@ -62,11 +62,9 @@ app.use(session({
 }));
 // go to the register page
 app.get('/register', (req, res) => {
-    res.render('register', {
-    });
+    res.render('public/views/register')
 });
 app.post('/register', (req, res) => {
-	var user = request.session.user;
 	User.sync()
 	.then(() => {
 
@@ -76,7 +74,7 @@ app.post('/register', (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then(() => {
+		.then(function(user) {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -99,7 +97,7 @@ app.post('/register', (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('views/login')
+						res.redirect('/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -108,6 +106,10 @@ app.post('/register', (req, res) => {
 		.then().catch(error => console.log(error))
 	})
 	.then().catch(error => console.log(error))
+})
+
+app.get('/login', (req, res)=> {
+	res.render('public/views/login')
 })
 
 // Goes to the index page, which is the homepage of the blog app
@@ -129,6 +131,7 @@ app.get('/profile', (req, res)=> {
         });
     }
 });
+
 
 app.get('/event', (req,res) =>{
 	var user = req.session.user;
