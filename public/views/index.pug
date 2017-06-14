@@ -28,8 +28,12 @@ html
 							a(href='/') Home
 						div
 							a(href='/register') Register
+            div
+							a(href='/post') Event Calender	
 						div
-							a(href='/post') Event Calender					
+							a(href='/login') Login
+						div
+							a(href='/register') Register
 						div
 							a(href='/about') About
 						div
@@ -42,9 +46,9 @@ html
 						source(src='../videos/Play_Date.webm', type='video/webm')
 						source(src='../video/Play_Date.mp4', type='video/mp4')
 						source(src='../video/Play_Date.ogv', type='video/ogg')
+				h1 #{message}
 				h1 Align
 				if user
-					h1 #{message}
 					p Meet new people, the adventurous way.
 					div.minicontainer 
 						h4 Core benefits
