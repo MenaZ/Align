@@ -8,15 +8,19 @@ html
 					if($('#email').val().trim().length === 0 || $('#password').val().trim().length === 0) {
 						event.preventDefault();
 						$('#error-message')
-						alert('error')
+						alert('You forget to fill in your password bruh.')
 					}
 				});
 			});
 	body
 		form(action='/login' method='post')
-			label email
+			label Email:
+			br
 			input(id='email' name='email' required)
-			label password
+			br
+			label Password:
+			br
 			input(id='password' name='password', required)
+			br
 			input(type='submit' value='login' id='submit')
 		h2#error-message= post
