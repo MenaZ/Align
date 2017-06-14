@@ -77,8 +77,15 @@ app.get('/register', (req, res) => {
     });
 });
 
+<<<<<<< HEAD
 
 app.post('/register', (req, res) => {
+=======
+app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
+	var user = request.session.user;
+	User.sync()
+	.then(() => {
+>>>>>>> 42875cc6774ab91a35c6314fb30eb55cd005befb
 	// check email im DB
 		User.findOne({
 			where: {
@@ -114,7 +121,8 @@ app.post('/register', (req, res) => {
 				})
 			}
 		})
-		
+		.then().catch(error => console.log(error))
+	})
 	.then().catch(error => console.log(error))
 })
 
@@ -172,15 +180,18 @@ app.get('/event', (req,res) =>{
     }
     else {
 	    Event.sync()
-	    	.then(function(){
+	    	.then(()=> {
 	    		User.findAll()
 	    			.then((users)=>{
-	    				Event.findAll({include: [{
+	    				Event.findAll(
+	    					{include: [{
 			    				model: Comment,
 			    				as: 'comments'
-			    			}],
-			    			order: '"updatedAt" DESC'
-			    		})
+			    			}]
+			    			// ,
+			    			// order: '"updatedAt" DESC'
+			    		}
+			    		)
 			    		.then((events)=>{
 			    			res.render('public/views/event', {
 			    				events: events,
@@ -194,7 +205,7 @@ app.get('/event', (req,res) =>{
 });
 
 app.post('/event', (req,res) => {
-	if(req.body.message.length===0 || req.body.title.length===0) {
+	if(req.body.description.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
 	}
