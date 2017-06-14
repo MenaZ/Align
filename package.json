@@ -25,9 +25,11 @@
   "homepage": "https://github.com/MenaZ/Align#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "pg": "^6.2.4",
+    "pg-hstore": "^2.3.2",
     "pug": "^2.0.0-rc.2",
     "sequelize": "^4.1.0"
   }
