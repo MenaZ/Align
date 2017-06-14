@@ -52,7 +52,7 @@ Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
 
-sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
@@ -72,7 +72,8 @@ app.get('/', function (req,res){
 
 // go to the register page
 app.get('/register', (req, res) => {
-    res.render('public/views/register')
+    res.render('public/views/register', {
+    });
 });
 
 app.post('/register', (req, res) => {
@@ -82,7 +83,7 @@ app.post('/register', (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then((user) => {
+		.then(() => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -105,7 +106,7 @@ app.post('/register', (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('/login')
+						res.redirect('views/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -114,8 +115,6 @@ app.post('/register', (req, res) => {
 		
 	.then().catch(error => console.log(error))
 })
-
-
 
 app.get('/login', (req, res)=> {
 	res.render('public/views/login')
@@ -163,7 +162,6 @@ app.get('/profile', (req, res)=> {
         });
     }
 });
-
 
 app.get('/event', (req,res) =>{
 	var user = req.session.user;
