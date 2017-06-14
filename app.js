@@ -76,7 +76,7 @@ app.get('/register', (req, res) => {
     });
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 	var user = request.session.user;
 	User.sync()
 	.then(() => {
@@ -119,6 +119,42 @@ app.post('/register', (req, res) => {
 	})
 	.then().catch(error => console.log(error))
 })
+
+app.get('/login', (req, res)=> {
+	res.render('public/views/login')
+})
+
+app.post('/login', (req, res) => {
+	if(req.body.email.length ===0) {
+		res.redirect('/?message=' + encodeURIComponent("Invalid email"));
+		return;
+	}
+	if(req.body.password.length ===0) {
+		res.redirect('/?message=' + encodeURIComponent("Invalid password"));
+		return;
+	}
+
+	User.findOne({
+		where: {
+			email:req.body.email
+		}
+	})	.then((user) => {
+		bcrypt.compare(req.body.password, user.password, (err, data)=>{
+			if (err) {
+					throw err;
+			} else {
+				if(user !== null && data === true) {
+					req.session.user = user;
+					res.redirect('/profile');
+				} else {
+					res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
+				}
+			}
+		});
+	}), (error)=> {
+		res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
+};
+});
 
 app.get('/profile', (req, res)=> {
     var user = req.session.user;
