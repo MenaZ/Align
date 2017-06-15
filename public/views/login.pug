@@ -1,7 +1,7 @@
 html
 	head
 		title Login
-		link(rel="stylesheet" href="../css/.css")
+		link(rel="stylesheet" href="../css/style.css")
 		script(src='../js/jquery-3.2.1.min.js')
 		script.
 			$(document).ready(function () {
@@ -14,17 +14,18 @@ html
 				});
 			});
 	body
-		header
-			nav
-				div
-					a(href= "/") Home
-				div
-					a(href='/post') Event Calender
-				div
-					a(href='about') About
-				div
-					a(href='/contact') Contact Us
-
+		.container
+			header
+				nav
+					div
+						a(href= "/") Home
+					div
+						a(href='/event') Event Calender
+					div
+						a(href='/about') About
+					div
+						a(href='/contact') Contact Us
+            
 		main
 			h1 Please Login:
 			form(action='/login' method='post')
@@ -38,6 +39,6 @@ html
 				br
 				input(type='submit' value='login' id='submit')
 			h2#error-message= post
-
-		footer
-			h4 &copy; 2017 Align Inc. All rights reserved.
+      
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.
