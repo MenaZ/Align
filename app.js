@@ -34,16 +34,18 @@ var User = sequelize.define('user', {
 	aboutme: Sequelize.STRING
 });
 
-var Event= sequelize.define('events', {
+var Event= sequelize.define('event', {
 	title: Sequelize.STRING,
 	description: Sequelize.STRING,
 	location: Sequelize.STRING,
 	date: Sequelize.STRING
 })
 
-var Comment= sequelize.define('comment', {
+var Comment = sequelize.define('comment', {
 	body: Sequelize.STRING
 })
+
+var Announce = sequelize.define('announce')
 
 // Setting up the model by linking the tables to each other
 Event.belongsTo(User);
@@ -52,6 +54,11 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
+User.hasMany(Announce);
+Announce.belongsTo(User);
+Event.hasMany(Announce);
+Announce.belongsTo(Event);
+
 
 sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
@@ -81,21 +88,17 @@ app.get('/contact', (req,res)=>{
 
 // go to the register page
 app.get('/register', (req, res) => {
-    res.render('public/views/register', {
-    });
+    res.render('public/views/register')
 });
 
 app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
-	var user = request.session.user;
-	User.sync()
-	.then(() => {
 	// check email im DB
 		User.findOne({
 			where: {
 					email: req.body.email
 			}
 		})
-		.then(() => {
+		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -118,16 +121,14 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('views/login')
+						res.redirect('public/views/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
 			}
 		})
-		.then().catch(error => console.log(error))
-	})
 	.then().catch(error => console.log(error))
-})
+});
 
 app.get('/login', (req, res)=> {
 	res.render('public/views/login')
