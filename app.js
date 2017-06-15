@@ -71,6 +71,14 @@ app.get('/', function (req,res){
 	});
 });
 
+app.get('/about', (req,res)=>{
+	res.render('public/views/about')
+})
+
+app.get('/contact', (req,res)=>{
+	res.render('public/views/contact')
+})
+
 // go to the register page
 app.get('/register', (req, res) => {
     res.render('public/views/register', {
