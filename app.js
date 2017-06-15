@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
+const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
@@ -20,6 +21,7 @@ app.use('/', bodyParser());
 app.set('views', './');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
+app.use(fileUpload());
 
 // Setting up the tables
 var User = sequelize.define('user', {
@@ -51,6 +53,10 @@ var Comment = sequelize.define('comment', {
 
 var Announce = sequelize.define('announce')
 
+var Picture = sequelize.define('pictures', {
+	picture: Sequelize.BLOB
+})
+
 // Setting up the model by linking the tables to each other
 Event.belongsTo(User);
 User.hasMany(Event);
@@ -62,7 +68,8 @@ User.hasMany(Announce);
 Announce.belongsTo(User);
 Event.hasMany(Announce);
 Announce.belongsTo(Event);
-
+Picture.belongsTo(User);
+User.hasOne(Picture)
 
 sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
@@ -99,7 +106,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 	// check email im DB
 		User.findOne({
 			where: {
-					email: req.body.email
+				email: req.body.email
 			}
 		})
 		.then((user) => {
@@ -173,11 +180,66 @@ app.get('/profile', (req, res)=> {
     if (user === undefined) {
         res.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
     } else {
-        res.render('public/views/profile', {
-            user: user
-        });
+    	Picture.findOne({
+    		where: {
+    			userId: user.id
+    		}
+    	}).then((picture)=>{
+    		res.render('public/views/profile', {
+            	user: user,
+            	picture: picture
+        	});
+    	}).then().catch((error)=> console.log(error))
     }
 });
+
+app.post('/upload', function(req, res) {
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+ 
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  let sampleFile = req.files.sampleFile;
+ 
+  // Use the mv() method to place the file somewhere on your server 
+  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+    if (err)
+      return res.status(500).send(err);
+ 
+    res.send('File uploaded!');
+  });
+});
+
+app.post('/picture', (req,res)=>{
+	var user= req.session.user;
+	if (user===undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Be logged in to upload an image."));
+	} else {
+		if(req.files!= undefined) {
+			return res.status(400).send('No files were uploaded.');
+		} else {
+			console.log(req.files)
+			let picture = req.files.picture;
+			let picturelink= '../img/profile.jpg'
+			picture.mv(picturelink, (err)=>{
+				if (err) {
+					throw err
+				} else {
+					Picture.sync()
+						.then(()=>{
+							return Picture.create({
+								picture: picturelink,
+								userId: user.id
+							})
+						})
+						.then(()=>{
+							res.redirect('/profile')
+						})
+						.then().catch((error)=>console.log(error))
+				}
+			})
+		}
+	}
+})
 
 app.get('/event', (req,res) =>{
     Event.sync()
