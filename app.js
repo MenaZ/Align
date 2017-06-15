@@ -77,15 +77,7 @@ app.get('/register', (req, res) => {
     });
 });
 
-<<<<<<< HEAD
-
-app.post('/register', (req, res) => {
-=======
 app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
-	var user = request.session.user;
-	User.sync()
-	.then(() => {
->>>>>>> 42875cc6774ab91a35c6314fb30eb55cd005befb
 	// check email im DB
 		User.findOne({
 			where: {
@@ -121,8 +113,6 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 				})
 			}
 		})
-		.then().catch(error => console.log(error))
-	})
 	.then().catch(error => console.log(error))
 })
 
