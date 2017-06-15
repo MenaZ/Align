@@ -1,11 +1,16 @@
 .indexcontainer h1 {
 	font-size: 50px;
 	font-weight: bold;
+	margin-left: 10px;
 }
 
 #loginform {
-	margin: 30px;
 	text-align: center;
+	margin: 40px;
+}
+
+#loginform label {
+	font-size: 22px;
 }
 
 #loginform input {
@@ -14,14 +19,19 @@
 	border: 1px solid blue;
 	border-radius: 20px;
 	width: 60%;
-	margin: 20px;
-	padding: 30px;
+	margin: 10px;
+	padding: 20px;
 }
 
-input:focus {
+.box:focus {
 	background-color: #adccff;
 }
 
-.submit:click {
-	bkackground
+.submit {
+	background-color: #5d3ded;
+	cursor: pointer;
 }
+
+footer {
+	margin-top: 57px;
+} 
