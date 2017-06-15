@@ -84,7 +84,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then(() => {
+		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -107,7 +107,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('views/login')
+						res.redirect('public/views/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
