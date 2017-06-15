@@ -239,7 +239,7 @@ app.post('/event', (req,res) => {
 })
 
 app.post('/comment', (req,res)=>{
-	if(req.body.comment.length===0) {
+	if(req.body.body.length===0) {
 		res.end('You forgot your comment!')
 	} else {
 		Comment.sync()
@@ -255,7 +255,7 @@ app.post('/comment', (req,res)=>{
 						userId: user.id
 					})
 				}).then(function(){
-					res.redirect('/post')
+					res.redirect('/event')
 				}).then().catch(error => console.log(error));
 	}
 })
