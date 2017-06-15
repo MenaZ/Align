@@ -84,7 +84,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 					email: req.body.email
 			}
 		})
-		.then((user) => {
+		.then(() => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
@@ -107,7 +107,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('/login')
+						res.redirect('views/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -170,18 +170,15 @@ app.get('/event', (req,res) =>{
     }
     else {
 	    Event.sync()
-	    	.then(()=> {
+	    	.then(function(){
 	    		User.findAll()
 	    			.then((users)=>{
-	    				Event.findAll(
-	    					{include: [{
+	    				Event.findAll({include: [{
 			    				model: Comment,
 			    				as: 'comments'
-			    			}]
-			    			// ,
-			    			// order: '"updatedAt" DESC'
-			    		}
-			    		)
+			    			}],
+			    			order: '"updatedAt" DESC'
+			    		})
 			    		.then((events)=>{
 			    			res.render('public/views/event', {
 			    				events: events,
@@ -195,7 +192,7 @@ app.get('/event', (req,res) =>{
 });
 
 app.post('/event', (req,res) => {
-	if(req.body.description.length===0 || req.body.title.length===0) {
+	if(req.body.message.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
 	}
