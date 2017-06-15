@@ -30,8 +30,8 @@ html
 						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
 						h3 #{event.title}
 						p Description: #{event.description}
-						p Location: #{event.location}
-						p Date: #{event.date}
+						p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
+						p Date: #{event.date} at #{event.time}
 						each comment in event.comments
 							each user in users
 								if comment.userId === user.id
@@ -52,39 +52,41 @@ html
 				input(name= 'title' id='title' placeholder= 'Type your title' required)
 				h3 Describe this event:
 				textarea(name= 'description' id='description' placeholder= 'Type your message' required)
-				h3 Where is this event located?
-				textarea(name='location' id='location' placeholder= 'Type the adress.' required)
 				h3 When is this event?
-				input(type='date' name='date' require)
+				input(type='date' name='date' placeholder='Type in the date' required)
 				br
 				br
+				input(type='time' name='time' placeholder='Type in the time' required)
+				br
+				br
+				h3 Where is the event?
 				div#locationField
-					input#autocomplete(placeholder='Enter your address', onfocus='geolocate()', type='text')
+					input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
 				table#address
 					tr
 						td.label Street address
 						td.slimField
-							input#street_number.field(disabled='true')
+							input#street_number.field(disabled='true' name='street_number' required)
 						td.wideField(colspan='2')
-							input#route.field(disabled='true')
+							input#route.field(disabled='true' name='address' required)
 					tr
 						td.label City
 					td.wideField(colspan='3')
-						input#locality.field(disabled='true')
+						input#locality.field(disabled='true' name='city' required)
 					tr
 						td.label State
 						td.slimField
-							input#administrative_area_level_1.field(disabled='true')
-						td.label Zip code
+							input#administrative_area_level_1.field(disabled='true' name='state' required)
+						td.label Postal Code
 						td.wideField
-							input#postal_code.field(disabled='true')
+							input#postal_code.field(disabled='true' name='postal' required)
 					tr
 						td.label Country
 						td.wideField(colspan='3')
-							input#country.field(disabled='true')
+							input#country.field(disabled='true' name='country' required)
 				input(type= 'submit' value= "Submit your post!")
 				script
 					include ../js/event.js
-				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC69bzh_p1WJDrzHaxQmOtZiCUwhJdyR38&libraries=places&callback=initAutocomplete', async='', defer='')
+				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
 		footer
 			h4 &copy; 2017 Align Inc. All rights reserved.
