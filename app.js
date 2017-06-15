@@ -56,10 +56,10 @@ var Announce = sequelize.define('announce')
 // Setting up the model by linking the tables to each other
 Event.belongsTo(User);
 User.hasMany(Event);
-// User.hasMany(Comment);
-// Comment.belongsTo(User);
-// Event.hasMany(Comment);
-//Comment.belongsTo(Event);
+User.hasMany(Comment);
+Comment.belongsTo(User);
+Event.hasMany(Comment);
+Comment.belongsTo(Event);
 User.hasMany(Announce);
 Announce.belongsTo(User);
 Event.hasMany(Announce);
