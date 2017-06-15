@@ -1,0 +1,27 @@
+.indexcontainer h1 {
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#loginform {
+	margin: 30px;
+	text-align: center;
+}
+
+#loginform input {
+	font-size: 30px;
+	text-align: center;
+	border: 1px solid blue;
+	border-radius: 20px;
+	width: 60%;
+	margin: 20px;
+	padding: 30px;
+}
+
+input:focus {
+	background-color: #adccff;
+}
+
+.submit:click {
+	bkackground
+}
