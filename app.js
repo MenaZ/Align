@@ -6,8 +6,6 @@ const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
 
-
-
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
@@ -76,7 +74,7 @@ app.use(session({
 }));
 
 // Goes to the index page, which is the homepage of the blog app
-app.get('/', function (req,res){
+app.get('/',  (req,res)=>{
 	res.render('public/views/index', {
 		// You can also use req.session.message so message won't show in the browser
 		message: req.query.message,
@@ -108,8 +106,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
-			}
-			else{
+			} else {
 				bcrypt.hash(req.body.password, null, null, (err, hash) =>{
 					if (err) {
 						throw err
@@ -149,12 +146,11 @@ app.post('/login', (req, res) => {
 		res.redirect('/?message=' + encodeURIComponent("Invalid password"));
 		return;
 	}
-
 	User.findOne({
 		where: {
 			email:req.body.email
 		}
-	})	.then((user) => {
+	}).then((user) => {
 		bcrypt.compare(req.body.password, user.password, (err, data)=>{
 			if (err) {
 					throw err;
@@ -169,7 +165,7 @@ app.post('/login', (req, res) => {
 		});
 	}), (error)=> {
 		res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
-};
+	};
 });
 
 app.get('/profile', (req, res)=> {
@@ -184,32 +180,26 @@ app.get('/profile', (req, res)=> {
 });
 
 app.get('/event', (req,res) =>{
-	var user = req.session.user;
-	// if (user === undefined) {
- //        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post events!"));
- //    }
- //    else {
-	    Event.sync()
-	    	.then(function(){
-	    		User.findAll()
-	    			.then((users)=>{
-	    				Event.findAll({include: [{
-			    				model: Comment,
-			    				as: 'comments'
-			    			}]
-			    			// ,
-			    			// order: '"updatedAt" DESC'
-			    		})
-			    		.then((events)=>{
-			    			res.render('public/views/event', {
-			    				events: events,
-			    				users: users
-			    			})
-			    		})
-	    			})
-	    	})
-	    	.then().catch(error=> console.log(error))
-	// }
+    Event.sync()
+    	.then(()=>{
+    		User.findAll()
+    			.then((users)=>{
+    				Event.findAll({include: [{
+		    				model: Comment,
+		    				as: 'comments'
+		    			}]
+		    			// ,
+		    			// order: '"updatedAt" DESC'
+		    		})
+		    		.then((events)=>{
+		    			res.render('public/views/event', {
+		    				events: events,
+		    				users: users
+		    			})
+		    		})
+    			})
+    	})
+    	.then().catch(error=> console.log(error))
 });
 
 app.post('/event', (req,res) => {
@@ -248,12 +238,11 @@ app.post('/event', (req,res) => {
 	}
 })
 
-app.post('/announce', (req,res)=>{
-	if(req.body.announce.length===0) {
+app.post('/comment', (req,res)=>{
+	if(req.body.body.length===0) {
 		res.end('You forgot your comment!')
-	}
-	else {
-		Announce.sync()
+	} else {
+		Comment.sync()
 			.then()
 				User.findOne({
 					where: {
@@ -281,5 +270,5 @@ app.get('/logout', (req, res)=> {
 });
 
 var server = app.listen(3000, function() {
-  console.log('http//:localhost:' + server.address().port);
+  console.log('http//:localhost:' + server.address().port)
 });
