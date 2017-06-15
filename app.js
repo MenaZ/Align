@@ -37,8 +37,14 @@ var User = sequelize.define('user', {
 var Event= sequelize.define('event', {
 	title: Sequelize.STRING,
 	description: Sequelize.STRING,
-	location: Sequelize.STRING,
-	date: Sequelize.STRING
+	address: Sequelize.STRING,
+	street_number: Sequelize.STRING,
+	city: Sequelize.STRING,
+	state: Sequelize.STRING,
+	postal: Sequelize.STRING,
+	country: Sequelize.STRING,
+	date: Sequelize.STRING,
+	time: Sequelize.STRING
 })
 
 var Comment = sequelize.define('comment', {
@@ -50,10 +56,10 @@ var Announce = sequelize.define('announce')
 // Setting up the model by linking the tables to each other
 Event.belongsTo(User);
 User.hasMany(Event);
-User.hasMany(Comment);
-Comment.belongsTo(User);
-Event.hasMany(Comment);
-Comment.belongsTo(Event);
+// User.hasMany(Comment);
+// Comment.belongsTo(User);
+// Event.hasMany(Comment);
+//Comment.belongsTo(Event);
 User.hasMany(Announce);
 Announce.belongsTo(User);
 Event.hasMany(Announce);
@@ -121,7 +127,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('public/views/login')
+						res.redirect('/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -179,10 +185,10 @@ app.get('/profile', (req, res)=> {
 
 app.get('/event', (req,res) =>{
 	var user = req.session.user;
-	if (user === undefined) {
-        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post events!"));
-    }
-    else {
+	// if (user === undefined) {
+ //        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post events!"));
+ //    }
+ //    else {
 	    Event.sync()
 	    	.then(function(){
 	    		User.findAll()
@@ -203,15 +209,17 @@ app.get('/event', (req,res) =>{
 	    			})
 	    	})
 	    	.then().catch(error=> console.log(error))
-	}
+	// }
 });
 
 app.post('/event', (req,res) => {
-	if(req.body.message.length===0 || req.body.title.length===0) {
+	var user = req.session.user;
+	if(req.body.description.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
-	}
-	else {
+	} else if (user === undefined) {
+        res.redirect('/?message=' + encodeURIComponent("Please log in to post events!"));
+    } else {
 		Event.sync()
 			.then()
 				User.findOne({
@@ -222,8 +230,14 @@ app.post('/event', (req,res) => {
 					return Event.create({
 						title: req.body.title,
 						description: req.body.description,
-						location: req.body.location,
+						address: req.body.address,
+						street_number: req.body.street_number,
+						city: req.body.city,
+						state: req.body.state,
+						postal: req.body.postal,
+						country: req.body.country,
 						date: req.body.date,
+						time: req.body.time,
 						userId: user.id
 					})
 				}).then().catch(error=> console.log(error))
@@ -234,12 +248,12 @@ app.post('/event', (req,res) => {
 	}
 })
 
-app.post('/comment', (req,res)=>{
-	if(req.body.comment.length===0) {
+app.post('/announce', (req,res)=>{
+	if(req.body.announce.length===0) {
 		res.end('You forgot your comment!')
 	}
 	else {
-		Comment.sync()
+		Announce.sync()
 			.then()
 				User.findOne({
 					where: {
@@ -252,7 +266,7 @@ app.post('/comment', (req,res)=>{
 						userId: user.id
 					})
 				}).then(function(){
-					res.redirect('/post')
+					res.redirect('/event')
 				}).then().catch(error => console.log(error));
 	}
 })

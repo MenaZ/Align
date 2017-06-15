@@ -1,7 +1,12 @@
 html
 	head
 		title Login
+<<<<<<< HEAD
 		//- link(rel="stylesheet" href="../css/style.css")
+=======
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/login.css")
+>>>>>>> 9588c1f17f4d1f49a6cd17c0cfd5b54bc46f463e
 		script(src='../js/jquery-3.2.1.min.js')
 		script.
 			$(document).ready(function () {
@@ -26,19 +31,20 @@ html
 					div
 						a(href='/contact') Contact Us
             
-		main
-			h1 Please Login:
-			form(action='/login' method='post')
-				label Email:
-				br
-				input(id='email' name='email' required)
-				br
-				label Password:
-				br
-				input(type='password' id='password' name='password', required)
-				br
-				input(type='submit' value='login' id='submit')
-			h2#error-message= post
+			div.indexcontainer
+				main
+					h1 Please Login:
+					form#loginform(action='/login' method='post')
+						label Email:
+						br
+						input(id='email' name='email' placeholder='Your Email' required)
+						br
+						label Password:
+						br
+						input(type='password' id='password' name='password' placeholder='Your Password' required)
+						br
+						input.submit(type='submit' value='login' id='submit')
+					h2#error-message= post
       
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
