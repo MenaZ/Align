@@ -81,6 +81,8 @@ html
 						td.wideField(colspan='3')
 							input#country.field(disabled='true')
 				input(type= 'submit' value= "Submit your post!")
+				script
+					include ../js/event.js
+				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC69bzh_p1WJDrzHaxQmOtZiCUwhJdyR38&libraries=places&callback=initAutocomplete', async='', defer='')
 		footer
 			h4 &copy; 2017 Align Inc. All rights reserved.
-		script(src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete', async='', defer='')

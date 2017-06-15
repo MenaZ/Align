@@ -25,20 +25,20 @@ html
 						a(href='/about') About
 					div
 						a(href='/contact') Contact Us
-
-			main
-				h1 Please Login:
-				form(action='/login' method='post')
-					label Email:
-					br
-					input(id='email' name='email' required)
-					br
-					label Password:
-					br
-					input(id='password' name='password', required)
-					br
-					input(type='submit' value='login' id='submit')
-				h2#error-message= post
-
+            
+		main
+			h1 Please Login:
+			form(action='/login' method='post')
+				label Email:
+				br
+				input(id='email' name='email' required)
+				br
+				label Password:
+				br
+				input(type='password' id='password' name='password', required)
+				br
+				input(type='submit' value='login' id='submit')
+			h2#error-message= post
+      
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
