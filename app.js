@@ -8,7 +8,7 @@ const bcrypt= require('bcrypt-nodejs');
 const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
-const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+const sequelize= new Sequelize('align_app', 'postgres'/*process.env.POSTGRES_USER*/, 'Blabla_55'/*process.env.POSTGRES_PASSWORD*/, {
 	host: 'localhost',
 	dialect: 'postgres',
 	define: {
@@ -290,6 +290,11 @@ app.post('/event', (req,res) => {
 })
 
 app.post('/comment', (req,res)=>{
+	if(req.body.comment.length===0) {
+		res.end('You forgot your comment!')
+	}
+	else {
+
 	if(req.body.body.length===0) {
 		res.end('You forgot your comment!')
 	} else {
@@ -309,7 +314,46 @@ app.post('/comment', (req,res)=>{
 					res.redirect('/event')
 				}).then().catch(error => console.log(error));
 	}
+
+}
+});
+
+// app.get('/announce', (req, res) => {
+// 	Announce.findAll()
+// 		.then((events)=>{
+// 			res.render('public/views/event', {
+// 				announce: announces
+// 			})
+// 		})
+// })
+
+
+app.post('/announce', (req, res) => {
+	var user = req.session.user;
+	var eventId = req.body.eventId; 
+			Announce.sync()
+			.then(function(){
+				Announce.findAll()
+				.then(announces=> {
+					console.log(announces);
+					return Announce.create({
+						eventId: eventId,
+						userId: user.id
+					})
+				}).then(function(){
+					res.redirect('/event')
+				})
+			}).then().catch(error => console.log(error));
+	    		
+
+			//.then()
+				//User.findOne({
+					//where: {
+						//email: req.session.user.email
+					//}
+				
 })
+
 
 app.get('/logout', (req, res)=> {
     req.session.destroy(function(error) {
@@ -321,5 +365,5 @@ app.get('/logout', (req, res)=> {
 });
 
 var server = app.listen(3000, function() {
-  console.log('http//:localhost:' + server.address().port)
+  console.log('The server is running at http//:localhost:' + server.address().port)
 });
