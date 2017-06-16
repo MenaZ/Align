@@ -8,7 +8,7 @@ const bcrypt= require('bcrypt-nodejs');
 const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
-const sequelize= new Sequelize('align_app', 'postgres'/*process.env.POSTGRES_USER*/, 'Blabla_55'/*process.env.POSTGRES_PASSWORD*/, {
+const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
 	dialect: 'postgres',
 	define: {
@@ -243,10 +243,14 @@ app.get('/event', (req,res) =>{
 		    			// order: '"updatedAt" DESC'
 		    		})
 		    		.then((events)=>{
-		    			res.render('public/views/event', {
-		    				events: events,
-		    				users: users
-		    			})
+		    			Announce.findAll()
+		    				.then((announces)=>{
+		    					res.render('public/views/event', {
+		    						events: events,
+		    						users: users,
+		    						announces: announces
+		    						})
+		    				})
 		    		})
     			})
     	})
@@ -318,18 +322,13 @@ app.post('/comment', (req,res)=>{
 }
 });
 
-// app.get('/announce', (req, res) => {
-// 	Announce.findAll()
-// 		.then((events)=>{
-// 			res.render('public/views/event', {
-// 				announce: announces
-// 			})
-// 		})
-// })
-
 
 app.post('/announce', (req, res) => {
 	var user = req.session.user;
+	if (user===undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
+		return
+	}
 	var eventId = req.body.eventId; 
 			Announce.sync()
 			.then(function(){
@@ -354,6 +353,9 @@ app.post('/announce', (req, res) => {
 				
 })
 
+app.post('/accept', (req, res) => {
+	res.redirect('/event')
+})
 
 app.get('/logout', (req, res)=> {
     req.session.destroy(function(error) {
