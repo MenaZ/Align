@@ -6,8 +6,6 @@ const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
 
-
-
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
@@ -203,7 +201,8 @@ app.get('/event', (req,res) =>{
 			    		.then((events)=>{
 			    			res.render('public/views/event', {
 			    				events: events,
-			    				users: users
+			    				users: users,
+			    				announces: announces
 			    			})
 			    		})
 	    			})
@@ -248,12 +247,12 @@ app.post('/event', (req,res) => {
 	}
 })
 
-app.post('/announce', (req,res)=>{
-	if(req.body.announce.length===0) {
+app.post('/comment', (req,res)=>{
+	if(req.body.comment.length===0) {
 		res.end('You forgot your comment!')
 	}
 	else {
-		Announce.sync()
+		Comment.sync()
 			.then()
 				User.findOne({
 					where: {
@@ -270,6 +269,33 @@ app.post('/announce', (req,res)=>{
 				}).then().catch(error => console.log(error));
 	}
 })
+
+app.post('/announce', (req, res) => {
+	var user = req.session.user;
+	var eventId = req.body.eventId; 
+			Announce.sync()
+			.then(function(){
+				Announce.findAll()
+				.then(announces=> {
+					console.log(announces);
+					return Announce.create({
+						eventId: eventId,
+						userId: user.id
+					})
+				}).then(function(){
+					res.redirect('/event')
+				})
+			}).then().catch(error => console.log(error));
+	    		
+
+			//.then()
+				//User.findOne({
+					//where: {
+						//email: req.session.user.email
+					//}
+				
+})
+
 
 app.get('/logout', (req, res)=> {
     req.session.destroy(function(error) {
