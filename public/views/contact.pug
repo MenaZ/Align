@@ -1,1 +1,61 @@
 html
+	head
+		title Contact
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/contact.css")
+	body
+		.container
+			header
+				nav
+					if user 
+						div
+							a#logout(href= "/logout") Logout
+						div
+							a(href= "/") Home
+						div
+							a(href= "/profile") Profile
+						div
+							a(href= '/event') My Events
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+					else
+						div
+							a(href= "/") Home
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/login') Login
+						div
+							a(href='/register') Register
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+            
+			div.indexcontainer
+				main
+					h1 About
+					section
+						h3 About us
+						p Align&copy; is a web app that strives for the solving of loneliness, worldwide. Through a combination of fun assignments and social games it allows people to go from complete strangers to friends by quickly forming positive emotional bonds.
+						h3 Send us a message
+						p Do you have any questions or tips on how to improve the app? Please send us an email. We all play a part in solving loneliness.
+
+						form#messageform(method="POST" action="/email")
+							input.box(type="text" name="name" placeholder="Your Name..." maxlength="40" required)
+							br
+							input.box(type="text" name="subject" placeholder="Subject..." maxlength="40" required)
+							br
+							input.box(type="email" name="email" placeholder="Your Email..." maxlength="40" required)
+							br
+							textarea.box(name="message" placeholder="Your helpful message..." maxlength="684" required)
+							br
+							br
+							input.submit(type="submit" value="Message!")
+
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.

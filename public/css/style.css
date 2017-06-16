@@ -15,7 +15,12 @@
 }
 
 body {
-	background-color: #5998ff;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background-repeat: no-repeat;
+	background-size: cover;
 	overflow: hidden;
 	color: white;
 }
@@ -25,13 +30,20 @@ body {
 	padding: 50px;
 }
 
+.indexcontainer h1 {
+	font-size: 50px;
+	font-weight: bold;
+	margin-left: 10px;
+	color: blue;
+}
+
 header nav div {
 	display: inline-block;
 }
 
-header {
+/*header {
 	display: block;
-}
+}*/
 
 nav {
 	float: right;
@@ -65,4 +77,8 @@ footer {
 
 footer h4 {
 	font-weight: normal;
+}
+
+#logout {
+	background-color: darkblue;
 }

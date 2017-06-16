@@ -11,7 +11,7 @@ html
 				nav
 					if user
 						div
-							a(href= "/logout") Logout
+							a#logout(href= "/logout") Logout
 						div
 							a(href= "/") Home
 						div
@@ -48,16 +48,15 @@ html
 					h1 Align
 					if user
 						h1 #{message}
-					p Meet new people, the adventurous way
+					p Meet new people, the adventurous way.
 					
 
-			section
-				div.minicontainer 
-						h4 Core benefits
-						ul
-							li Matches based on preferences
-							li Get fun assignments with every meeting
-							li Always go to parties with a party
+			section.minicontainer
+				h4 Core benefits
+				ul
+					li Matches based on preferences
+					li Get fun assignments with every meeting
+					li Always go to parties with a party
 
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
