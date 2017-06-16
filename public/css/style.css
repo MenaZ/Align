@@ -30,6 +30,13 @@ body {
 	padding: 50px;
 }
 
+.indexcontainer h1 {
+	font-size: 50px;
+	font-weight: bold;
+	margin-left: 10px;
+	color: blue;
+}
+
 header nav div {
 	display: inline-block;
 }
@@ -70,4 +77,8 @@ footer {
 
 footer h4 {
 	font-weight: normal;
+}
+
+#logout {
+	background-color: darkblue;
 }
