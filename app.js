@@ -54,7 +54,7 @@ var Comment = sequelize.define('comment', {
 var Announce = sequelize.define('announce')
 
 var Picture = sequelize.define('pictures', {
-	picture: Sequelize.BLOB
+	picture: Sequelize.STRING
 })
 
 // Setting up the model by linking the tables to each other
@@ -157,7 +157,7 @@ app.post('/login', (req, res) => {
 		where: {
 			email:req.body.email
 		}
-	}).then((user) => {
+	}).then((user) => { //This part needs fixing, when the email is not in the database it should not pass on, it will yield errors.
 		bcrypt.compare(req.body.password, user.password, (err, data)=>{
 			if (err) {
 					throw err;
@@ -185,6 +185,7 @@ app.get('/profile', (req, res)=> {
     			userId: user.id
     		}
     	}).then((picture)=>{
+    		console.log(picture)
     		res.render('public/views/profile', {
             	user: user,
             	picture: picture
@@ -193,41 +194,29 @@ app.get('/profile', (req, res)=> {
     }
 });
 
-app.post('/upload', function(req, res) {
-  if (!req.files)
-    return res.status(400).send('No files were uploaded.');
- 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
-  let sampleFile = req.files.sampleFile;
- 
-  // Use the mv() method to place the file somewhere on your server 
-  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-    if (err)
-      return res.status(500).send(err);
- 
-    res.send('File uploaded!');
-  });
-});
-
 app.post('/picture', (req,res)=>{
 	var user= req.session.user;
 	if (user===undefined) {
 		res.redirect('/?message=' + encodeURIComponent("Be logged in to upload an image."));
 	} else {
-		if(req.files!= undefined) {
+		console.log("This is req.files: ")
+		console.log(req.files)
+		if(!req.files) {
 			return res.status(400).send('No files were uploaded.');
 		} else {
-			console.log(req.files)
-			let picture = req.files.picture;
-			let picturelink= '../img/profile.jpg'
+			let picture= req.files.picture
+			let picturelink= `../Align/public/img/profile/${user.id}.jpg`
+			let databaseLink= `../img/profile/${user.id}.jpg`
 			picture.mv(picturelink, (err)=>{
 				if (err) {
 					throw err
 				} else {
-					Picture.sync()
+					Picture.sync({force:true}) //Now it seems you can upload a picture only once, but the whole database will be reset. This need extension to change the link in the database if there is already a photo uploaded.
 						.then(()=>{
+							console.log("This is picturelink: ")
+							console.log(picturelink)
 							return Picture.create({
-								picture: picturelink,
+								picture: databaseLink,
 								userId: user.id
 							})
 						})
