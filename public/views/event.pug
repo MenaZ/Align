@@ -25,6 +25,10 @@ html
 			each event in events
 				each user in users
 					if event.userId===user.id
+						if user.picture
+							img(src= user.picture.picture, width="200")
+						else
+							img(id="profilepicture" src='../img/profile/default.jpg')
 						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
 						h3 #{event.title}
 						p Description: #{event.description}
@@ -35,22 +39,22 @@ html
 								if comment.userId === user.id
 									h4 #{user.firstname} #{user.lastname} commented:
 									p #{comment.body}
-						each announce in announces
-							h2 #{announce.eventId} #{announce.userId}
-								form(action='/announce' method="post")
-									input(type="hidden"  name = "eventId" value= event.id)
-									br
-									input(type="hidden" name = "userId" value= user.id )
-									br
-									input(type='submit' value='Accept your event')
-
-								form(action='/comment' method='post')
-									h4 Comment:
-									textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-									input(type='hidden' name='eventId' value= event.id)
-									br
-									br
-									input(type='submit' value='Submit your comment!')
+						if announces
+							each announce in announces
+								h2 #{announce.eventId} #{announce.userId}
+									form(action='/announce' method="post")
+										input(type="hidden"  name = "eventId" value= event.id)
+										br
+										input(type="hidden" name = "userId" value= user.id )
+										br
+										input(type='submit' value='Accept your event')
+						form(action='/comment' method='post')
+							h4 Comment:
+							textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+							input(type='hidden' name='eventId' value= event.id)
+							br
+							br
+							input(type='submit' value='Submit your comment!')
 			else
 				h2 You haven't posted anything yet!
 			h2 Post your awesome event!
