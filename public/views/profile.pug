@@ -33,6 +33,7 @@ html
 					img(id="profilepicture" src=picture.picture)
 				else
 					h3 Upload or change your profile picture!
+					img(id="profilepicture" src='../img/profile/default.jpg')
 					form(method="post" action="/picture" encType="multipart/form-data")
 						input(type='file' name="picture" accept="image/jpg")
 						br
