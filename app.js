@@ -75,7 +75,7 @@ sequelize.sync({force: false}) //Change false to true to wipe clean the whole da
 
 // Creates session when user logs in
 app.use(session({
-	secret: `#{process.env.SECRET_SESSION}`,
+	secret: `${process.env.SECRET_SESSION}`,
 	resave: true,
 	saveUninitialized: false
 }));
@@ -205,8 +205,8 @@ app.post('/picture', (req,res)=>{
 			return res.status(400).send('No files were uploaded.');
 		} else {
 			let picture= req.files.picture
-			let picturelink= `../Align/public/img/profile/${user.id}.jpg`
-			let databaseLink= `../img/profile/${user.id}.jpg`
+			let picturelink= `public/img/profile/${user.id}.jpg`
+			let databaseLink= `public/img/profile/${user.id}.jpg`
 			picture.mv(picturelink, (err)=>{
 				if (err) {
 					throw err
