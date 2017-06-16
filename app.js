@@ -201,8 +201,7 @@ app.get('/event', (req,res) =>{
 			    		.then((events)=>{
 			    			res.render('public/views/event', {
 			    				events: events,
-			    				users: users,
-			    				announces: announces
+			    				users: users
 			    			})
 			    		})
 	    			})
@@ -269,6 +268,16 @@ app.post('/comment', (req,res)=>{
 				}).then().catch(error => console.log(error));
 	}
 })
+
+// app.get('/announce', (req, res) => {
+// 	Announce.findAll()
+// 		.then((events)=>{
+// 			res.render('public/views/event', {
+// 				announce: announces
+// 			})
+// 		})
+// })
+
 
 app.post('/announce', (req, res) => {
 	var user = req.session.user;
