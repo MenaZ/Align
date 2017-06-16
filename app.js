@@ -69,13 +69,13 @@ Announce.belongsTo(User);
 Event.hasMany(Announce);
 Announce.belongsTo(Event);
 Picture.belongsTo(User);
-User.hasOne(Picture)
+User.hasOne(Picture);
 
 sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
-	secret: `#{process.env.SECRET_SESSION}`,
+	secret: `${process.env.SECRET_SESSION}`,
 	resave: true,
 	saveUninitialized: false
 }));
@@ -158,6 +158,10 @@ app.post('/login', (req, res) => {
 			email:req.body.email
 		}
 	}).then((user) => { //This part needs fixing, when the email is not in the database it should not pass on, it will yield errors.
+		if(user === null) {
+        	res.redirect('/?message=' + encodeURIComponent("Does not exist!"));
+			return;
+		}
 		bcrypt.compare(req.body.password, user.password, (err, data)=>{
 			if (err) {
 					throw err;
@@ -205,13 +209,13 @@ app.post('/picture', (req,res)=>{
 			return res.status(400).send('No files were uploaded.');
 		} else {
 			let picture= req.files.picture
-			let picturelink= `../Align/public/img/profile/${user.id}.jpg`
+			let picturelink= `public/img/profile/${user.id}.jpg`
 			let databaseLink= `../img/profile/${user.id}.jpg`
 			picture.mv(picturelink, (err)=>{
 				if (err) {
 					throw err
 				} else {
-					Picture.sync({force:true}) //Now it seems you can upload a picture only once, but the whole database will be reset. This need extension to change the link in the database if there is already a photo uploaded.
+					Picture.sync({force:false}) //Now it seems you can upload a picture only once, but the whole database will be reset. This need extension to change the link in the database if there is already a photo uploaded.
 						.then(()=>{
 							console.log("This is picturelink: ")
 							console.log(picturelink)
@@ -233,7 +237,10 @@ app.post('/picture', (req,res)=>{
 app.get('/event', (req,res) =>{
     Event.sync()
     	.then(()=>{
-    		User.findAll()
+    		User.findAll({include: [{
+    			model: Picture,
+    			// as: 'pictures'
+    		}]})
     			.then((users)=>{
     				Event.findAll({include: [{
 		    				model: Comment,

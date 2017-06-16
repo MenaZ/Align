@@ -27,6 +27,10 @@ html
 			each event in events
 				each user in users
 					if event.userId===user.id
+						if user.picture
+							img(src= user.picture.picture, width="200")
+						else
+							img(id="profilepicture" src='../img/profile/default.jpg')
 						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
 						h3 #{event.title}
 						p Description: #{event.description}
