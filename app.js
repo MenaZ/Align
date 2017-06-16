@@ -8,7 +8,7 @@ const bcrypt= require('bcrypt-nodejs');
 const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
-const sequelize= new Sequelize('align_app', 'postgres'/*process.env.POSTGRES_USER*/, 'Blabla_55'/*process.env.POSTGRES_PASSWORD*/, {
+const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	host: 'localhost',
 	dialect: 'postgres',
 	define: {
