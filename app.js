@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
-const fileUpload = require('express-fileupload');
+// const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
@@ -21,7 +21,7 @@ app.use('/', bodyParser());
 app.set('views', './');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
-app.use(fileUpload());
+// app.use(fileUpload());
 
 // Setting up the tables
 var User = sequelize.define('user', {
@@ -321,5 +321,5 @@ app.get('/logout', (req, res)=> {
 });
 
 var server = app.listen(3000, function() {
-  console.log('http//:localhost:' + server.address().port)
+  console.log('The server is running at http//:localhost:' + server.address().port)
 });
