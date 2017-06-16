@@ -250,12 +250,14 @@ app.get('/event', (req,res) =>{
 		    			// order: '"updatedAt" DESC'
 		    		})
 		    		.then((events)=>{
-		    			console.log("These are the users: ");
-		    			console.log(users);
-		    			res.render('public/views/event', {
-		    				events: events,
-		    				users: users
-		    			})
+		    			Announce.findAll()
+		    				.then((announces)=>{
+		    					res.render('public/views/event', {
+		    						events: events,
+		    						users: users,
+		    						announces: announces
+		    						})
+		    				})
 		    		})
     			})
     	})
@@ -327,18 +329,13 @@ app.post('/comment', (req,res)=>{
 }
 });
 
-// app.get('/announce', (req, res) => {
-// 	Announce.findAll()
-// 		.then((events)=>{
-// 			res.render('public/views/event', {
-// 				announce: announces
-// 			})
-// 		})
-// })
-
 
 app.post('/announce', (req, res) => {
 	var user = req.session.user;
+	if (user===undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
+		return
+	}
 	var eventId = req.body.eventId; 
 			Announce.sync()
 			.then(function(){
@@ -363,6 +360,9 @@ app.post('/announce', (req, res) => {
 				
 })
 
+app.post('/accept', (req, res) => {
+	res.redirect('/event')
+})
 
 app.get('/logout', (req, res)=> {
     req.session.destroy(function(error) {
