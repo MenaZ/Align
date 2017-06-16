@@ -1,0 +1,50 @@
+html
+	head
+		title Login
+		//- link(rel="stylesheet" href="../css/style.css")
+
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/login.css")
+		script(src='../js/jquery-3.2.1.min.js')
+		script.
+			$(document).ready(function () {
+				$('#submit').click(function(event) {
+					if($('#email').val().trim().length === 0 || $('#password').val().trim().length === 0) {
+						event.preventDefault();
+						$('#error-message')
+						alert('You forget to fill in your password bruh.')
+					}
+				});
+			});
+	body
+		.container
+			header
+				nav
+					div
+						a(href= "/") Home
+					div
+						a(href='/event') Event Calender
+					div
+						a(href='/about') About
+					div
+						a(href='/contact') Contact Us
+            
+			div.indexcontainer
+				main
+					h1 Please Login:
+					form#loginform(action='/login' method='post')
+						label Email:
+						br
+						input.box(id='email' name='email' placeholder='Your Email' maxlength='35' required)
+						br
+						label Password:
+						br
+						input.box(type='password' id='password' name='password' maxlength='35' placeholder='Your Password' required)
+						br
+						br
+						br
+						input.submit(type='submit' value='Login' id='submit')
+					h2#error-message= post
+      
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.

@@ -1,0 +1,38 @@
+html
+	head
+		title About Us
+		link(rel="stylesheet" href="../css/.css")
+	body
+		header
+			nav
+			if user 
+				div
+					a(href= "/logout") Logout
+				div
+					a(href= "/") Home
+				div
+					a(href= "/profile") Profile
+				div
+					a(href= '/event') My Events
+				div
+					a(href='/event') Event Calender
+				div
+					a(href='/about') About
+				div
+					a(href='/contact') Contact Us
+			else
+				div
+					a(href= "/") Home
+				div
+					a(href='/event') Event Calender
+				div
+					a(href='/about') About
+				div
+					a(href='/contact') Contact Us
+		
+		main
+			h1 About Us
+			p We are a small company based in the city of sin, Amsterdam. There is no shortage of people here. Unfortunately we have found that people are still experiencing loneliness. Thus, we have embarked on a journey to create new friendships. One pair at a time. Get aligned now!
+
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.

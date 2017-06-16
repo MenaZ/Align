@@ -1,0 +1,62 @@
+html
+	head
+		title Align
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/index.css")
+	body
+
+		div.container
+			header
+				img#logo(src="../img/Placeholderlogo.png")
+				nav
+					if user
+						div
+							a(href= "/logout") Logout
+						div
+							a(href= "/") Home
+						div
+							a(href= "/profile") Profile
+						div
+							a(href= '/myposts') My Events
+						div
+							a(href='/post') Event Calender
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+					else
+						div
+							a(href='/') Home
+						div
+							a(href='/event') Event Calender	
+						div
+							a(href='/login') Login
+						div
+							a(href='/register') Register
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+
+			div.indexcontainer
+				main
+					.fullscreen-bg
+						video.fullscreen-video(loop='' muted='' autoplay='')
+							source(src='../videos/Play_Date.webm', type='video/webm')
+							source(src='../video/Play_Date.mp4', type='video/mp4')
+							source(src='../video/Play_Date.ogv', type='video/ogg')
+					h1 Align
+					if user
+						h1 #{message}
+					p Meet new people, the adventurous way.
+					
+
+			section.minicontainer
+				h4 Core benefits
+				ul
+					li Matches based on preferences
+					li Get fun assignments with every meeting
+					li Always go to parties with a party
+
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.

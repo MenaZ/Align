@@ -1,0 +1,68 @@
+@font-face {
+	font-family: 'Gotham Book Regular';
+	src: url('../fonts/Gotham Book Regular.otf');
+}
+
+@font-face {
+	font-family: 'Youth Beauty';
+	src: url('../fonts/Youth Beauty.ttf')
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Gotham Book Regular';
+}
+
+body {
+	background-color: #5998ff;
+	overflow: hidden;
+	color: white;
+}
+
+.container {
+	border: none;
+	padding: 50px;
+}
+
+header nav div {
+	display: inline-block;
+}
+
+header {
+	display: block;
+}
+
+nav {
+	float: right;
+}
+
+a {
+	border: 1px solid darkblue;
+	border-radius: 10px;
+	text-decoration: none;
+	color: white;
+	padding: 5px 10px;
+	margin-right: 10px;
+	background-color: #3e64a3;
+}
+
+a:hover {
+	color: red;
+}
+
+footer {
+	position: relative;
+	bottom: 58px;
+	left: 920px;
+	display: inline-block;
+	text-align: center;
+	background-color: blue;
+	padding: 20px;
+	z-index: 2;
+	color: white;
+}
+
+footer h4 {
+	font-weight: normal;
+}
