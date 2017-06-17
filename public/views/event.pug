@@ -96,7 +96,7 @@ html
 						h3 Title:
 						input(name= 'title' id='title' placeholder= 'Type your title' required)
 						h3 Describe this event:
-						textarea(name= 'description' id='description' placeholder= 'Type your message' required)
+						textarea(name= 'description' id='description' placeholder= 'Type your message' maxlength='300' required)
 						h3 When is this event?
 						input(type='date' name='date' placeholder='Type in the date' required)
 						br
@@ -129,7 +129,7 @@ html
 								td.label Country
 								td.wideField(colspan='3')
 									input#country.field(disabled='true' name='country' required)
-						input(type= 'submit' value= "Submit your post!")
+						input.submit(type= 'submit' value= "Submit your post!")
 	
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.

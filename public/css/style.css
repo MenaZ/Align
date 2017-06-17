@@ -1,9 +1,6 @@
-html {
+html body {
 	height: 100%;
-	background: #1e5799; /* Old browsers */
-	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	width: 100%;
 }
 
 @font-face {
@@ -30,22 +27,22 @@ body {
 .container {
 	border: none;
 	padding: 50px;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
 }
 
 .indexcontainer h1 {
 	font-size: 50px;
 	font-weight: bold;
 	margin-left: 10px;
-	color: blue;
+	color: #122647;
 }
 
 header nav div {
 	display: inline-block;
 }
-
-/*header {
-	display: block;
-}*/
 
 nav {
 	float: right;
