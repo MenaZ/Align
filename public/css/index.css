@@ -6,6 +6,10 @@
     z-index: 20;
 }
 
+.logo {
+    color: transparent;
+}
+
 .fullscreen-bg {
     position: fixed;
     top: 0;
@@ -34,6 +38,7 @@
 }
 
 .indexcontainer h1 {
+    color: white;
     font-size: 180px;
     margin-top: 100px;
     margin-right: 500px;
@@ -54,4 +59,9 @@
     font-weight: normal;
     text-align: left; 
     color: red;
+}
+
+footer {
+    position: relative;
+    bottom: 20px;
 }

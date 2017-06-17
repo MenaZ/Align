@@ -1,4 +1,33 @@
 img {
+	display: block;
+	margin-top: 40px;
+	margin-left: 40px;
 	border: 1px solid blue;
 	border-radius: 100px;
+	height: 300px;
+	width: 300px;
+}
+
+.buttons {
+	position: absolute;
+	margin: 0px 440px;
+	margin-top: 10px;
+}
+
+main h2 {
+	margin: 20px;
+	margin-top: 50px;
+}
+
+.eventsbutton {
+	font-size: 28px;
+	padding: 20px;
+	display: inline-block;
+	text-align: center;
+	margin: 20px auto;
+	width: 50%;
+}
+
+footer {
+	margin-top: 95px;
 }

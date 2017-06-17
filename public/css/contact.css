@@ -1,21 +1,26 @@
 body {
 	overflow-y: scroll;
+	text-align: center;
+}
+
+.indexcontainer h1 {
+	text-align: left;
 }
 
 section {
-	margin-top: 50px;
+	margin-top: 40px;
 	padding-left: 15px;
 	padding-right: 5px;
 }
 
-section h3 {
-	margin: 30px 0 10px;
+section h2 {
+	margin: 0 auto 10px;
 	color: blue;
 }
 
 #messageform {
-	margin: 20px;
-	margin-top: 20px;
+	margin: 30px;
+	margin-top: 30px;
 	text-align: center;
 }
 
@@ -49,6 +54,11 @@ section h3 {
 	cursor: pointer;
 }
 
-footer {
-	margin-top: 57px;
-} 
+address {
+	display: inline-block;
+	text-align: center;
+	background-color: rgba(81, 141, 194, 0.8);
+	border: 1px solid blue;
+	padding: 20px;
+	margin-top: 40px;
+}
