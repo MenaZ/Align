@@ -55,3 +55,8 @@
     text-align: left; 
     color: red;
 }
+
+footer {
+    position: relative;
+    bottom: 20px;
+}
