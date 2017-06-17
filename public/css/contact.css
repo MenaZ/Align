@@ -15,7 +15,7 @@ section {
 
 section h2 {
 	margin: 0 auto 10px;
-	color: blue;
+	color: #122647;
 }
 
 #messageform {
@@ -28,6 +28,7 @@ section h2 {
 	font-size: 28px;
 	margin: 10px 0;
 	padding: 5px;
+	color: #122647;
 	padding-left: 20px;
 	height: 10%;
 	width: 60%;
