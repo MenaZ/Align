@@ -33,10 +33,17 @@ html
 					if picture
 						img(id="profilepicture" src=picture.picture)
 					else
-						h3 Upload your profile picture!
-						form(method="post" action="/picture" encType="multipart/form-data")
-							input(type='file' name="picture" accept="image/jpg")
-							br
-							input(type='submit' value="Load up your image")
+						.upload
+							h3 Upload your profile picture!
+							form(method="post" action="/picture" encType="multipart/form-data")
+								input(type='file' name="picture" accept="image/jpg")
+								br
+								input(type='submit' value="Load up your image")
+
+					section
+						h2 Latest events visited:
+						.recentevents
+							p Lorizzle fo shizzle my ipsizzle.
+
 				footer
 					h4 &copy; 2017 Align Inc. All rights reserved.
