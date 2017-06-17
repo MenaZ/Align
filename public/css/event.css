@@ -52,8 +52,15 @@ html, body {
 /*-------------------------------------------------------------------------------------*/
 
 body {
-  overflow: scroll;
-  scroll-behavior: scroll;
+  overflow-y: scroll;
+}
+
+main {
+  text-align: center;
+}
+
+main h1 {
+  text-align: left;
 }
 
 main h2{
@@ -61,8 +68,13 @@ main h2{
 }
 
 main form {
-  margin: 10px;
+  display: inline-block;
+  background-color: rgba(81, 141, 194, 0.8);
+  margin: 0 auto;
+  padding: 20px;
+  width: 70%;
   text-align: center;
+  border: 1px solid blue;
 }
 
 main form h3 {
@@ -71,9 +83,16 @@ main form h3 {
 
 main form input {
   border: 1px solid blue;
+  border-radius: 10px;
   font-size: 24px;
   padding: 10px;
 }
+
+main form input:focus {
+  background-color: #adccff;
+}
+
+main
 
 main form textarea {
   border: 1px solid blue;
@@ -84,6 +103,20 @@ main form textarea {
   height: 20%;
 }
 
+main form textarea:focus {
+  background-color: #adccff;
+}
+
 table, #locationField {
   margin: 0 auto;
+}
+
+footer {
+  margin-top: 20px;
+}
+
+.submit {
+  margin-top: 20px;
+  cursor: pointer;
+  color: #122647;
 }
