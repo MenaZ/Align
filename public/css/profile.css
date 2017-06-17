@@ -8,15 +8,43 @@ img {
 	width: 300px;
 }
 
+.upload {
+	display: inline-block;
+	padding: 15px;
+	border: 1px solid blue;
+	background-color: rgba(81, 141, 194, 0.8);
+	border-radius: 10px;
+	margin: 30px;
+}
+
 .buttons {
 	position: absolute;
-	margin: 0px 440px;
-	margin-top: 10px;
+	margin: 10px 405px;
 }
 
 main h2 {
 	margin: 20px;
 	margin-top: 50px;
+}
+
+section {
+	position: relative;
+	bottom: 430px;
+	float: right;
+}
+
+section h2 {
+	text-align: right;
+}
+
+section .recentevents {
+	position: relative;
+	/*right: 200px;*/
+	border: 1px solid blue;
+	background-color: rgba(81, 141, 194, 0.8);
+	padding: 20px;
+	width: 460px;
+	height: 300px;
 }
 
 .eventsbutton {
@@ -29,5 +57,8 @@ main h2 {
 }
 
 footer {
-	margin-top: 95px;
+	position: absolute;
+	bottom: 40px;
+	left: 530px;
+	margin-top: 50px;
 }

@@ -1,6 +1,11 @@
-html body {
+html {
 	height: 100%;
 	width: 100%;
+	background-color: blue;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
 }
 
 @font-face {
@@ -27,10 +32,6 @@ body {
 .container {
 	border: none;
 	padding: 50px;
-	background: #1e5799; /* Old browsers */
-	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
 }
 
 .indexcontainer h1 {
@@ -38,6 +39,7 @@ body {
 	font-weight: bold;
 	margin-left: 10px;
 	color: #122647;
+	z-index: 10;
 }
 
 header nav div {
