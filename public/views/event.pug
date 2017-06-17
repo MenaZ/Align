@@ -82,15 +82,15 @@ html
 										input(type="hidden" name = "userId" value= user.id )
 										br
 										input(type='submit' value='Sign up to go to this event!')
-								form(action='/comment' method='post')
-									h4 Comment:
-									textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-									input(type='hidden' name='eventId' value= event.id)
-									br
-									br
-									input(type='submit' value='Submit your comment!')
-					else
-						h2 You haven't posted anything yet!
+									form(action='/comment' method='post')
+										h4 Comment:
+										textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+										input(type='hidden' name='eventId' value=event.id)
+										br
+										br
+										input(type='submit' value='Submit your comment!')
+							else
+								h2 You haven't posted anything yet!
 					h2 Post your awesome event!
 					form(action='/event' method='post')
 						h3 Title:
@@ -130,7 +130,7 @@ html
 								td.wideField(colspan='3')
 									input#country.field(disabled='true' name='country' required)
 						input(type= 'submit' value= "Submit your post!")
-				
+	
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
 

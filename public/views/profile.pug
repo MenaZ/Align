@@ -3,6 +3,7 @@ html
 		title My Profile
 		link(rel="stylesheet" href="../css/style.css")
 		link(rel="stylesheet" href="../css/profile.css")
+		
 	body
 		.container
 			header
@@ -22,21 +23,20 @@ html
 					div
 						a(href='/contact') Contact Us
 
-			main
-				h1 #{user.firstname}'s Profile		
-				h2 Welcome to your profile #{user.firstname}!
-				h3
-					a(href='/event') Click here to view all events!
-				h3
-					a(href='/myevents') Click to view all the events you posted!
-				if picture
-					img(id="profilepicture" src=picture.picture)
-				else
-					h3 Upload or change your profile picture!
-					img(id="profilepicture" src='../img/profile/default.jpg')
-					form(method="post" action="/picture" encType="multipart/form-data")
-						input(type='file' name="picture" accept="image/jpg")
-						br
-						input(type='submit' value="Load up your image")
-			footer
-				h4 &copy; 2017 Align Inc. All rights reserved.
+			.indexcontainer
+				main
+					h1 #{user.firstname}'s Profile		
+					h2 Welcome to your profile #{user.firstname}!
+					.buttons
+						a.eventsbutton(href='/event') Click here to view all events!
+						a.eventsbutton(href='/myevents') Click to view all the events you posted!
+					if picture
+						img(id="profilepicture" src=picture.picture)
+					else
+						h3 Upload your profile picture!
+						form(method="post" action="/picture" encType="multipart/form-data")
+							input(type='file' name="picture" accept="image/jpg")
+							br
+							input(type='submit' value="Load up your image")
+				footer
+					h4 &copy; 2017 Align Inc. All rights reserved.
