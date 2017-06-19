@@ -117,7 +117,7 @@ html
 													input(type='submit' value='Accept this person!' id="show")
 													input(type='submit' value='This person stinks!' id="hide")
 													br
-						each comment in event.comments
+						each comment in events.comments
 							each user in users
 								if comment.userId === user.id
 									h4 #{user.firstname} #{user.lastname} commented:
@@ -145,8 +145,8 @@ html
 								br
 								br
 								input(type='submit' value='Submit your comment!')
-			else
-				h2 You haven't posted anything yet!
+						else
+							h2 You haven't posted anything yet!
 			h2 Post your awesome event!
 			if loggedInUser!== undefined
 				form(action='/event' method='post')
@@ -198,10 +198,10 @@ html
 								td.wideField(colspan='3')
 									input#country.field(disabled='true' name='country' required)
 						input.submit(type= 'submit' value= "Submit your post!")
-        else 
-				    h2 Log in to sign up and comment on events!
-				footer
-					h4 &copy; 2017 Align Inc. All rights reserved.
+			else
+				h2 Log in to sign up and comment on events!
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.
 		script
 			include ../js/event.js
 		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')

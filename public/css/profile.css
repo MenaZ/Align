@@ -1,3 +1,7 @@
+body {
+	overflow: hidden;
+}
+
 img {
 	display: block;
 	margin-top: 40px;
@@ -39,12 +43,12 @@ section h2 {
 
 section .recentevents {
 	position: relative;
-	/*right: 200px;*/
 	border: 1px solid blue;
 	background-color: rgba(81, 141, 194, 0.8);
 	padding: 20px;
 	width: 460px;
 	height: 300px;
+	overflow-y: auto;
 }
 
 .eventsbutton {
@@ -57,8 +61,10 @@ section .recentevents {
 }
 
 footer {
-	position: absolute;
+	margin-top: 70px;
+	text-align: right;
+	/*position: absolute;
 	bottom: 40px;
 	left: 530px;
-	margin-top: 50px;
+	margin-top: 50px;*/
 }
