@@ -12,6 +12,7 @@
 
 #loginform label {
 	font-size: 22px;
+	margin: 20px;
 }
 
 #loginform input {
@@ -20,8 +21,7 @@
 	border: 1px solid blue;
 	border-radius: 20px;
 	width: 60%;
-
-	margin: 30px;
+	/*margin: 30px;*/
 	padding: 30px;
 
 }

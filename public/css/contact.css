@@ -7,11 +7,19 @@
 
 body {
 	overflow-y: scroll;
-	text-align: center;
+}
+
+.indexcontainer {
+
 }
 
 .indexcontainer h1 {
 	text-align: left;
+}
+
+main section {
+	width: 70%;
+	margin: 0 auto;
 }
 
 section {
@@ -20,9 +28,31 @@ section {
 	padding-right: 5px;
 }
 
+.findus {
+	margin-top: 50px;
+	display: block;
+	height: 50%;
+	text-align: center;
+}
+
 section h2 {
-	margin: 0 auto 10px;
 	color: #122647;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.findush2p {
+	margin-top: 30px;
+	float: left;
+	width: 50%;
+}
+
+.findusaddress {
+	margin-left: 60px;
+}
+
+.sendmessage {
+	margin-top: -80px;
 }
 
 #messageform {
