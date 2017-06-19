@@ -26,10 +26,9 @@ main p {
 
 }
 .input {
-
 	font-size: 30px;
 	text-align: center;
-	border: 1px solid blue;
+	border: 1px solid #133d6d;
 	border-radius: 20px;
 	width: 30%;
 	margin-top: 20px;
