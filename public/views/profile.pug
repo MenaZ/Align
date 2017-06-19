@@ -44,9 +44,8 @@ html
 						h2 Most recent events:
 						.recentevents
 							each event in events
-								a(href="/event") #{event.title} in #{event.city}!
+								form(method="post" action="/specificevent")
+									input(type= "submit" name="event" value=event.title) 
 								br
-								br
-
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.

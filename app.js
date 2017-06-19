@@ -307,6 +307,37 @@ app.get('/myevent', (req,res) =>{
 	}
 });
 
+app.post('/specificevent', (req,res)=>{
+	var user = req.session.user;
+	if (user === undefined) {
+        res.redirect('/login?message=' + encodeURIComponent("Please log in to view the vent you clicked!"));
+    } else {
+	Event.findOne({
+		where: {
+			title: req.body.event.title
+		},
+		include: [{
+			model: Comment,
+			as: "comments"
+		}]
+	}).then((event)=>{
+		User.findAll({include: [{
+			model: Picture
+		}]})
+	}).then((users)=>{
+			Announce.findAll()
+				.then((announces)=>{
+					res.render('public/views/event', {
+						events: event,
+						users: users,
+						announces: announces
+					})
+				})
+				.then().catch(error=> console.log(error))
+		})
+	}
+})
+
 app.post('/event', (req,res) => {
 	var user = req.session.user;
 	if(req.body.description.length===0 || req.body.title.length===0) {
