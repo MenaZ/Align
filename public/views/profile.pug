@@ -41,9 +41,12 @@ html
 								input(type='submit' value="Load up your image")
 
 					section
-						h2 Latest events visited:
+						h2 Most recent events:
 						.recentevents
-							p Lorizzle fo shizzle my ipsizzle.
+							each event in events
+								a(href="/event") #{event.title} in #{event.city}!
+								br
+								br
 
 				footer
 					h4 &copy; 2017 Align Inc. All rights reserved.
