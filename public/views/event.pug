@@ -108,35 +108,89 @@ html
 						input(type='time' name='time' placeholder='Type in the time' required)
 						br
 						br
-						h3 Where is the event?
-						div#locationField
-							input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
-						table#address
-							tr
-								td.label Street address
-								td.slimField
-									input#street_number.field(disabled='true' name='street_number' required)
-								td.wideField(colspan='2')
-									input#route.field(disabled='true' name='address' required)
-							tr
-								td.label City
+						each announce in announces
+							each user in users
+								if loggedInUser
+									if user.id=== announce.userId && loggedInUser.id === event.userId
+											h2#username #{user.firstname} wants to go with you!
+												form(action='/accept' method="post")
+													input(type='submit' value='Accept this person!' id="show")
+													input(type='submit' value='This person stinks!' id="hide")
+													br
+						each comment in event.comments
+							each user in users
+								if comment.userId === user.id
+									h4 #{user.firstname} #{user.lastname} commented:
+									p #{comment.body}
+							script.
+								$(document).ready(function(){
+									$("#hide").click(function(){
+										$('#username').hide()
+									})
+									$("#show").click(function(){
+										$("#username").show();
+									});
+								})
+						if loggedInUser
+							form(action='/announce' method="post")
+								input(type="hidden"  name = "eventId" value= event.id)
+								br
+								input(type="hidden" name = "userId" value= user.id )
+								br
+								input(type='submit' value='Sign up to go to this event!')
+							form(action='/comment' method='post')
+								h4 Comment:
+								textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+								input(type='hidden' name='eventId' value= event.id)
+								br
+								br
+								input(type='submit' value='Submit your comment!')
+			else
+				h2 You haven't posted anything yet!
+			h2 Post your awesome event!
+			if loggedInUser!== undefined
+				form(action='/event' method='post')
+					h3 Title:
+					input(name= 'title' id='title' placeholder= 'Type your title' required)
+					h3 Describe this event:
+					textarea(name= 'description' id='description' placeholder= 'Type your message' required)
+					h3 When is this event?
+					input(type='date' name='date' placeholder='Type in the date' required)
+					br
+					br
+					input(type='time' name='time' placeholder='Type in the time' required)
+					br
+					br
+					h3 Where is the event?
+					div#locationField
+						input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
+					table#address
+						tr
+							td.label Street address
+							td.slimField
+								input#street_number.field(disabled='true' name='street_number' required)
+							td.wideField(colspan='2')
+								input#route.field(disabled='true' name='address' required)
+						tr
+							td.label City
+						td.wideField(colspan='3')
+							input#locality.field(disabled='true' name='city' required)
+						tr
+							td.label State
+							td.slimField
+								input#administrative_area_level_1.field(disabled='true' name='state' required)
+							td.label Postal Code
+							td.wideField
+								input#postal_code.field(disabled='true' name='postal' required)
+						tr
+							td.label Country
 							td.wideField(colspan='3')
-								input#locality.field(disabled='true' name='city' required)
-							tr
-								td.label State
-								td.slimField
-									input#administrative_area_level_1.field(disabled='true' name='state' required)
-								td.label Postal Code
-								td.wideField
-									input#postal_code.field(disabled='true' name='postal' required)
-							tr
-								td.label Country
-								td.wideField(colspan='3')
-									input#country.field(disabled='true' name='country' required)
-						input.submit(type= 'submit' value= "Submit your post!")
-				
-		script
-			include ../js/event.js
-		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
-					footer
-						h4 &copy; 2017 Align Inc. All rights reserved.
+								input#country.field(disabled='true' name='country' required)
+					input(type= 'submit' value= "Submit your post!")
+			else 
+				h2 Log in to sign up and comment on events!
+				script
+					include ../js/event.js
+				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
+		footer
+			h4 &copy; 2017 Align Inc. All rights reserved.
