@@ -305,9 +305,8 @@ app.post('/comment', (req,res)=>{
 		res.end('You forgot your comment!')
 	}
 	else {
-
-	if(req.body.body.length===0) {
-		res.end('You forgot your comment!')
+		if(req.body.comment.length===0) {
+			res.end('You forgot your comment!')
 	} else {
 		Comment.sync()
 			.then()
