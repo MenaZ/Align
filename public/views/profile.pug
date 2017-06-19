@@ -15,7 +15,7 @@ html
 					div
 						a(href= "/profile") Profile
 					div
-						a(href= '/event') My Events
+						a(href= '/myevent') My Events
 					div
 						a(href='/event') Event Calender
 					div
@@ -29,7 +29,7 @@ html
 					h2 Welcome to your profile #{user.firstname}!
 					.buttons
 						a.eventsbutton(href='/event') Click here to view all events!
-						a.eventsbutton(href='/myevents') Click to view all the events you posted!
+						a.eventsbutton(href='/myevent') Click to view all the events you posted!
 					if picture
 						img(id="profilepicture" src=picture.picture)
 					else
