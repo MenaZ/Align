@@ -18,12 +18,10 @@
 #loginform input {
 	font-size: 30px;
 	text-align: center;
-	border: 1px solid blue;
+	border: 1px solid #133d6d;
 	border-radius: 20px;
 	width: 60%;
-	/*margin: 30px;*/
 	padding: 30px;
-
 }
 
 .box:focus {

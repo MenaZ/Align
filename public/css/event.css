@@ -75,9 +75,11 @@ main h2{
 }
 
 main img {
+  height: 30%;
+  width: 15%;
   border-radius: 20px;
-  border: 1px solid blue;
-  margin-bottom: 10px;
+  border: 1px solid #133d6d;
+  margin: 10px 0;
 }
 
 main form {
@@ -87,7 +89,7 @@ main form {
   padding: 20px;
   width: 70%;
   text-align: center;
-  border: 1px solid blue;
+  border: 1px solid #133d6d;
 }
 
 main form h3 {
@@ -95,7 +97,7 @@ main form h3 {
 }
 
 main form input {
-  border: 1px solid blue;
+  border: 1px solid #133d6d;
   border-radius: 10px;
   font-size: 24px;
   padding: 10px;
@@ -106,7 +108,7 @@ main form input:focus {
 }
 
 form textarea {
-  border: 1px solid blue;
+  border: 1px solid #133d6d;
   border-radius: 10px;
   padding: 10px;
   resize: none;
@@ -127,6 +129,19 @@ table {
   border-radius: 10px;
 }
 
+.newevent {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.newevent h2{
+  margin-top: 50px;
+  color: #122647;
+}
+
+.newevent p {
+  margin-bottom: 20px;
+}
 
 .submit {
   margin-top: 10px;
@@ -135,6 +150,51 @@ table {
   background-color: #5d3ded;
 }
 
+.submitevent {
+  margin-top: 40px;
+  cursor: pointer;
+  color: #122647;
+  background-color: #5d3ded;
+}
+
+.titleEvent {
+  color: #122647;
+}
+
+.eventDescription {
+  border-top: 1px solid #133d6d;
+  border-bottom: 1px solid #133d6d;
+  margin: 0 auto;
+  width: 50%;
+  padding: 20px;
+  background-color: rgba(81, 141, 194, 0.8);
+}
+
+#comments {
+  width: 50%;
+}
+
+#comments h4 {
+  margin-bottom: 10px;
+}
+
+#comments textarea {
+  width: 100%;
+}
+
+#join {
+  border: none;
+  background-color: transparent;
+}
+
+#join .submit {
+  margin-top: -20px;
+}
+
+#address {
+  margin-bottom: -20px;
+}
+
 footer {
-  margin-top: 20px;
+  margin: 20px;
 }
