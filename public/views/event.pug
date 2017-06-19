@@ -54,18 +54,16 @@ html
 										$("#username").show();
 									});
 								})
-									
 							//- form(action='/accept' method="post")
 							input(type='submit' value='Accept this person!' id="show")
 							br
 							input(type='submit' value='This person stinks!' id="hide")
-
-							form(action='/announce' method="post")
-								input(type="hidden"  name = "eventId" value= event.id)
-								br
-								input(type="hidden" name = "userId" value= user.id )
-								br
-								input(type='submit' value='Sign up to go to this event!')
+						form(action='/announce' method="post")
+							input(type="hidden"  name = "eventId" value= event.id)
+							br
+							input(type="hidden" name = "userId" value= user.id )
+							br
+							input(type='submit' value='Sign up to go to this event!')
 						form(action='/comment' method='post')
 							h4 Comment:
 							textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
