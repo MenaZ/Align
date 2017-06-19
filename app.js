@@ -169,7 +169,8 @@ app.post('/login', (req, res) => {
 					throw err;
 			} else {
 				if(user !== null && data === true) {
-					req.session.user = user;
+					loggedInUser= user;
+					req.session.user = loggedInUser;
 					res.redirect('/profile');
 				} else {
 					res.redirect('/login?message=' + encodeURIComponent("Invalid email or password."));
@@ -191,11 +192,14 @@ app.get('/profile', (req, res)=> {
     			userId: user.id
     		}
     	}).then((picture)=>{
-    		console.log(picture)
-    		res.render('public/views/profile', {
-            	user: user,
-            	picture: picture
-        	});
+    		Event.findAll()
+    			.then((events)=>{
+    				res.render('public/views/profile', {
+		            	user: user,
+		            	picture: picture,
+		            	events: events
+		        	});
+    			})
     	}).then().catch((error)=> console.log(error))
     }
 });
@@ -205,8 +209,6 @@ app.post('/picture', (req,res)=>{
 	if (user===undefined) {
 		res.redirect('/login?message=' + encodeURIComponent("Be logged in to upload an image."));
 	} else {
-		console.log("This is req.files: ")
-		console.log(req.files)
 		if(!req.files) {
 			return res.status(400).send('No files were uploaded.');
 		} else {
@@ -219,8 +221,6 @@ app.post('/picture', (req,res)=>{
 				} else {
 					Picture.sync({force:false}) //Now it seems you can upload a picture only once, but the whole database will be reset. This need extension to change the link in the database if there is already a photo uploaded.
 						.then(()=>{
-							console.log("This is picturelink: ")
-							console.log(picturelink)
 							return Picture.create({
 								picture: databaseLink,
 								userId: user.id
@@ -257,7 +257,8 @@ app.get('/event', (req,res) =>{
 		    					res.render('public/views/event', {
 		    						events: events,
 		    						users: users,
-		    						announces: announces
+		    						announces: announces,
+		    						loggedInUser: req.session.user
 		    						})
 		    				})
 		    		})
