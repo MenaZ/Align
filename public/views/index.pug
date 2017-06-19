@@ -5,6 +5,12 @@ html
 		link(rel="stylesheet" href="../css/index.css")
 	body
 
+		.fullscreen-bg
+			video.fullscreen-video(loop='' muted='' autoplay='')
+				source(src='../videos/Play_Date.webm', type='video/webm')
+				source(src='../video/Play_Date.mp4', type='video/mp4')
+				source(src='../video/Play_Date.ogv', type='video/ogg')
+
 		div.container
 			header
 				img#logo(src="../img/Placeholderlogo.png")
@@ -40,14 +46,7 @@ html
 
 			div.indexcontainer
 				main
-					.fullscreen-bg
-						video.fullscreen-video(loop='' muted='' autoplay='')
-							source(src='../videos/Play_Date.webm', type='video/webm')
-							source(src='../video/Play_Date.mp4', type='video/mp4')
-							source(src='../video/Play_Date.ogv', type='video/ogg')
 					h1 Align
-					if user
-						h1 #{message}
 					p Meet new people, the adventurous way.
 					
 

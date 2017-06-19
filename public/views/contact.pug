@@ -38,12 +38,21 @@ html
             
 			div.indexcontainer
 				main
-					h1 About
+					h1 Contact
+					//- section
+					//- 	h3 About us
+					//- 	p Align&copy; is a web app that strives for the solving of loneliness, worldwide. Through a combination of fun assignments and social games it allows people to go from complete strangers to friends by quickly forming positive emotional bonds.
 					section
-						h3 About us
-						p Align&copy; is a web app that strives for the solving of loneliness, worldwide. Through a combination of fun assignments and social games it allows people to go from complete strangers to friends by quickly forming positive emotional bonds.
-						h3 Send us a message
-						p Do you have any questions or tips on how to improve the app? Please send us an email. We all play a part in solving loneliness.
+						h2 Where to find us
+						p Want to swing by for a nice tea and chat? Want to send us fanmail? Or maybe a gift or two? You can do that and more with the following address:
+						address
+							p 123 Sowowstreet
+							p 9000 AZ Amsterdoge
+							p The Netherdoges
+
+					section
+						h2 Send us a message
+						p Do you have any questions or tips on how to improve the app? Please send us an email. Everyone can take part in our mission to solve loneliness.
 
 						form#messageform(method="POST" action="/email")
 							input.box(type="text" name="name" placeholder="Your Name..." maxlength="40" required)
