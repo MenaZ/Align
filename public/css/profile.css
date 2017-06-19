@@ -1,0 +1,64 @@
+img {
+	display: block;
+	margin-top: 40px;
+	margin-left: 40px;
+	border: 1px solid blue;
+	border-radius: 100px;
+	height: 300px;
+	width: 300px;
+}
+
+.upload {
+	display: inline-block;
+	padding: 15px;
+	border: 1px solid blue;
+	background-color: rgba(81, 141, 194, 0.8);
+	border-radius: 10px;
+	margin: 30px;
+}
+
+.buttons {
+	position: absolute;
+	margin: 10px 405px;
+}
+
+main h2 {
+	margin: 20px;
+	margin-top: 50px;
+}
+
+section {
+	position: relative;
+	bottom: 430px;
+	float: right;
+}
+
+section h2 {
+	text-align: right;
+}
+
+section .recentevents {
+	position: relative;
+	/*right: 200px;*/
+	border: 1px solid blue;
+	background-color: rgba(81, 141, 194, 0.8);
+	padding: 20px;
+	width: 460px;
+	height: 300px;
+}
+
+.eventsbutton {
+	font-size: 28px;
+	padding: 20px;
+	display: inline-block;
+	text-align: center;
+	margin: 20px auto;
+	width: 50%;
+}
+
+footer {
+	position: absolute;
+	bottom: 40px;
+	left: 530px;
+	margin-top: 50px;
+}

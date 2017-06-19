@@ -1,44 +1,91 @@
 html
 	head
 		title Events
-		link(rel="stylesheet" href="../css/.css")
-		style
-			include ../css/event.css
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/event.css")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 	body
-		header
-			nav
-				div
-					a(href= "/logout") Logout
-				div
-					a(href= "/") Home
-				div
-					a(href= "/profile") Profile
-				div
-					a(href= '/event') My Events
-				div
-					a(href='/about') About
-				div
-					a(href='/contact') Contact Us
-
+		.container
+			header
+				nav
+					if user 
+						div
+							a#logout(href= "/logout") Logout
+						div
+							a(href= "/") Home
+						div
+							a(href= "/profile") Profile
+						div
+							a(href= '/myevent') My Events
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+					else
+						div
+							a(href= "/") Home
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/login') Login
+						div
+							a(href='/register') Register
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
 		main
+			.indexcontainer
 			h1 All Events
 			each event in events
 				each user in users
 					if event.userId===user.id
+						if user.picture
+							br
+							img(src= user.picture.picture, width="200")
+						else
+							br
+							img(id="profilepicture" src='../img/profile/default.jpg')
 						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
 						h3 #{event.title}
 						p Description: #{event.description}
 						p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
 						p Date: #{event.date} at #{event.time}
+						br
+						each announce in announces
+							each user in users
+								if user.id=== announce.userId
+									h2#username #{user.firstname} wants to go with you!
+									form(action='/accept' method="post")
+										input(type='submit' value='Accept this person!' id="show")
+										input(type='submit' value='This person stinks!' id="hide")
+										br
 						each comment in event.comments
 							each user in users
 								if comment.userId === user.id
 									h4 #{user.firstname} #{user.lastname} commented:
 									p #{comment.body}
+							script.
+								$(document).ready(function(){
+									$("#hide").click(function(){
+										$('#username').hide()
+									})
+									$("#show").click(function(){
+										$("#username").show();
+									});
+								})
+						form(action='/announce' method="post")
+							input(type="hidden"  name = "eventId" value= event.id)
+							br
+							input(type="hidden" name = "userId" value= user.id )
+							br
+							input(type='submit' value='Sign up to go to this event!')
 						form(action='/comment' method='post')
 							h4 Comment:
 							textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-							input(type='hidden' name='eventId' value=event.id)
+							input(type='hidden' name='eventId' value= event.id)
 							br
 							br
 							input(type='submit' value='Submit your comment!')
@@ -54,36 +101,6 @@ html
 				input(type='date' name='date' placeholder='Type in the date' required)
 				br
 				br
-<<<<<<< HEAD
-				//- div#locationField
-				//- 	input#autocomplete(placeholder='Enter your address', onfocus='geolocate()', type='text')
-				//- table#address
-				//- 	tr
-				//- 		td.label Street address
-				//- 		td.slimField
-				//- 			input#street_number.field(disabled='true')
-				//- 		td.wideField(colspan='2')
-				//- 			input#route.field(disabled='true')
-				//- 	tr
-				//- 		td.label City
-				//- 	td.wideField(colspan='3')
-				//- 		input#locality.field(disabled='true')
-				//- 	tr
-				//- 		td.label State
-				//- 		td.slimField
-				//- 			input#administrative_area_level_1.field(disabled='true')
-				//- 		td.label Zip code
-				//- 		td.wideField
-				//- 			input#postal_code.field(disabled='true')
-				//- 	tr
-				//- 		td.label Country
-				//- 		td.wideField(colspan='3')
-				//- 			input#country.field(disabled='true')
-				//- input(type= 'submit' value= "Submit your post!")
-				//- script
-				//- 	include ../js/event.js
-				//- script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC69bzh_p1WJDrzHaxQmOtZiCUwhJdyR38&libraries=places&callback=initAutocomplete', async='', defer='')
-=======
 				input(type='time' name='time' placeholder='Type in the time' required)
 				br
 				br
@@ -113,9 +130,9 @@ html
 						td.wideField(colspan='3')
 							input#country.field(disabled='true' name='country' required)
 				input(type= 'submit' value= "Submit your post!")
+				
 				script
 					include ../js/event.js
 				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
->>>>>>> 9588c1f17f4d1f49a6cd17c0cfd5b54bc46f463e
 		footer
 			h4 &copy; 2017 Align Inc. All rights reserved.
