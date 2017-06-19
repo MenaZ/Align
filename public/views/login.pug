@@ -1,6 +1,8 @@
 html
 	head
 		title Login
+		//- link(rel="stylesheet" href="../css/style.css")
+
 		link(rel="stylesheet" href="../css/style.css")
 		link(rel="stylesheet" href="../css/login.css")
 		script(src='../js/jquery-3.2.1.min.js')
@@ -33,13 +35,15 @@ html
 					form#loginform(action='/login' method='post')
 						label Email:
 						br
-						input(id='email' name='email' placeholder='Your Email' required)
+						input.box(id='email' name='email' placeholder='Your Email' maxlength='35' required)
 						br
 						label Password:
 						br
-						input(type='password' id='password' name='password' placeholder='Your Password' required)
+						input.box(type='password' id='password' name='password' maxlength='35' placeholder='Your Password' required)
 						br
-						input.submit(type='submit' value='login' id='submit')
+						br
+						br
+						input.submit(type='submit' value='Login' id='submit')
 					h2#error-message= post
       
 			footer

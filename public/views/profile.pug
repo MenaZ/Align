@@ -27,6 +27,14 @@ html
 				a(href='/event') Click here to view all events!
 			h3
 				a(href='/myevents') Click to view all the events you posted!
-
+			h3 Upload or change your profile picture!
+				form(method="post" action="/picture")
+					input(type='file' name="picture" accept="image/*")
+					br
+					input(type='submit' value="Load up your image")
+			img(id="profilepicture" src='')
+		script.
+			document.getElementById("profilepicture").src = picture
+			console.log(picture)
 		footer
 			h4 &copy; 2017 Align Inc. All rights reserved.

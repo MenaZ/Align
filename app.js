@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 const session= require('express-session');
 const bcrypt= require('bcrypt-nodejs');
-
-
+const fileUpload = require('express-fileupload');
 
 // Setting up the link to the database.
 const sequelize= new Sequelize('align_app', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
@@ -22,6 +21,7 @@ app.use('/', bodyParser());
 app.set('views', './');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
+app.use(fileUpload());
 
 // Setting up the tables
 var User = sequelize.define('user', {
@@ -37,8 +37,14 @@ var User = sequelize.define('user', {
 var Event= sequelize.define('event', {
 	title: Sequelize.STRING,
 	description: Sequelize.STRING,
-	location: Sequelize.STRING,
-	date: Sequelize.STRING
+	address: Sequelize.STRING,
+	street_number: Sequelize.STRING,
+	city: Sequelize.STRING,
+	state: Sequelize.STRING,
+	postal: Sequelize.STRING,
+	country: Sequelize.STRING,
+	date: Sequelize.STRING,
+	time: Sequelize.STRING
 })
 
 var Comment = sequelize.define('comment', {
@@ -46,6 +52,10 @@ var Comment = sequelize.define('comment', {
 })
 
 var Announce = sequelize.define('announce')
+
+var Picture = sequelize.define('pictures', {
+	picture: Sequelize.BLOB
+})
 
 // Setting up the model by linking the tables to each other
 Event.belongsTo(User);
@@ -58,7 +68,8 @@ User.hasMany(Announce);
 Announce.belongsTo(User);
 Event.hasMany(Announce);
 Announce.belongsTo(Event);
-
+Picture.belongsTo(User);
+User.hasOne(Picture)
 
 sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
@@ -70,7 +81,7 @@ app.use(session({
 }));
 
 // Goes to the index page, which is the homepage of the blog app
-app.get('/', function (req,res){
+app.get('/',  (req,res)=>{
 	res.render('public/views/index', {
 		// You can also use req.session.message so message won't show in the browser
 		message: req.query.message,
@@ -95,15 +106,14 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 	// check email im DB
 		User.findOne({
 			where: {
-					email: req.body.email
+				email: req.body.email
 			}
 		})
 		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
         		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
 				return;
-			}
-			else{
+			} else {
 				bcrypt.hash(req.body.password, null, null, (err, hash) =>{
 					if (err) {
 						throw err
@@ -121,7 +131,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 						})
 					})
 					.then(() =>{
-						res.redirect('public/views/login')
+						res.redirect('/login')
 					})
 					.then().catch(error=> console.log(error))
 				})
@@ -143,12 +153,11 @@ app.post('/login', (req, res) => {
 		res.redirect('/?message=' + encodeURIComponent("Invalid password"));
 		return;
 	}
-
 	User.findOne({
 		where: {
 			email:req.body.email
 		}
-	})	.then((user) => {
+	}).then((user) => {
 		bcrypt.compare(req.body.password, user.password, (err, data)=>{
 			if (err) {
 					throw err;
@@ -163,7 +172,7 @@ app.post('/login', (req, res) => {
 		});
 	}), (error)=> {
 		res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
-};
+	};
 });
 
 app.get('/profile', (req, res)=> {
@@ -171,47 +180,98 @@ app.get('/profile', (req, res)=> {
     if (user === undefined) {
         res.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
     } else {
-        res.render('public/views/profile', {
-            user: user
-        });
+    	Picture.findOne({
+    		where: {
+    			userId: user.id
+    		}
+    	}).then((picture)=>{
+    		res.render('public/views/profile', {
+            	user: user,
+            	picture: picture
+        	});
+    	}).then().catch((error)=> console.log(error))
     }
 });
 
-app.get('/event', (req,res) =>{
-	var user = req.session.user;
-	if (user === undefined) {
-        res.redirect('/?message=' + encodeURIComponent("Please log in to view and post events!"));
-    }
-    else {
-	    Event.sync()
-	    	.then(function(){
-	    		User.findAll()
-	    			.then((users)=>{
-	    				Event.findAll({include: [{
-			    				model: Comment,
-			    				as: 'comments'
-			    			}]
-			    			// ,
-			    			// order: '"updatedAt" DESC'
-			    		})
-			    		.then((events)=>{
-			    			res.render('public/views/event', {
-			    				events: events,
-			    				users: users
-			    			})
-			    		})
-	    			})
-	    	})
-	    	.then().catch(error=> console.log(error))
+app.post('/upload', function(req, res) {
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+ 
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  let sampleFile = req.files.sampleFile;
+ 
+  // Use the mv() method to place the file somewhere on your server 
+  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+    if (err)
+      return res.status(500).send(err);
+ 
+    res.send('File uploaded!');
+  });
+});
+
+app.post('/picture', (req,res)=>{
+	var user= req.session.user;
+	if (user===undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Be logged in to upload an image."));
+	} else {
+		if(req.files!= undefined) {
+			return res.status(400).send('No files were uploaded.');
+		} else {
+			console.log(req.files)
+			let picture = req.files.picture;
+			let picturelink= '../img/profile.jpg'
+			picture.mv(picturelink, (err)=>{
+				if (err) {
+					throw err
+				} else {
+					Picture.sync()
+						.then(()=>{
+							return Picture.create({
+								picture: picturelink,
+								userId: user.id
+							})
+						})
+						.then(()=>{
+							res.redirect('/profile')
+						})
+						.then().catch((error)=>console.log(error))
+				}
+			})
+		}
 	}
+})
+
+app.get('/event', (req,res) =>{
+    Event.sync()
+    	.then(()=>{
+    		User.findAll()
+    			.then((users)=>{
+    				Event.findAll({include: [{
+		    				model: Comment,
+		    				as: 'comments'
+		    			}]
+		    			// ,
+		    			// order: '"updatedAt" DESC'
+		    		})
+		    		.then((events)=>{
+		    			res.render('public/views/event', {
+		    				events: events,
+		    				users: users
+		    			})
+		    		})
+    			})
+    	})
+    	.then().catch(error=> console.log(error))
 });
 
 app.post('/event', (req,res) => {
-	if(req.body.message.length===0 || req.body.title.length===0) {
+	var user = req.session.user;
+	if(req.body.description.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
-	}
-	else {
+	} else if (user === undefined) {
+        res.redirect('/?message=' + encodeURIComponent("Please log in to post events!"));
+    } else {
 		Event.sync()
 			.then()
 				User.findOne({
@@ -222,8 +282,14 @@ app.post('/event', (req,res) => {
 					return Event.create({
 						title: req.body.title,
 						description: req.body.description,
-						location: req.body.location,
+						address: req.body.address,
+						street_number: req.body.street_number,
+						city: req.body.city,
+						state: req.body.state,
+						postal: req.body.postal,
+						country: req.body.country,
 						date: req.body.date,
+						time: req.body.time,
 						userId: user.id
 					})
 				}).then().catch(error=> console.log(error))
@@ -235,10 +301,9 @@ app.post('/event', (req,res) => {
 })
 
 app.post('/comment', (req,res)=>{
-	if(req.body.comment.length===0) {
+	if(req.body.body.length===0) {
 		res.end('You forgot your comment!')
-	}
-	else {
+	} else {
 		Comment.sync()
 			.then()
 				User.findOne({
@@ -252,7 +317,7 @@ app.post('/comment', (req,res)=>{
 						userId: user.id
 					})
 				}).then(function(){
-					res.redirect('/post')
+					res.redirect('/event')
 				}).then().catch(error => console.log(error));
 	}
 })
@@ -267,5 +332,5 @@ app.get('/logout', (req, res)=> {
 });
 
 var server = app.listen(3000, function() {
-  console.log('http//:localhost:' + server.address().port);
+  console.log('http//:localhost:' + server.address().port)
 });
