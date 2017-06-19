@@ -74,6 +74,12 @@ main h2{
   margin: 10px;
 }
 
+main img {
+  border-radius: 20px;
+  border: 1px solid blue;
+  margin-bottom: 10px;
+}
+
 main form {
   display: inline-block;
   background-color: rgba(81, 141, 194, 0.8);
@@ -121,9 +127,6 @@ table {
   border-radius: 10px;
 }
 
-footer {
-  margin-top: 20px;
-}
 
 .submit {
   margin-top: 10px;
