@@ -254,6 +254,7 @@ app.get('/event', (req,res) =>{
 		    		.then((events)=>{
 		    			Announce.findAll()
 		    				.then((announces)=>{
+		    					console.log(events);
 		    					res.render('public/views/event', {
 		    						events: events,
 		    						users: users,
