@@ -39,7 +39,7 @@ html
 
 		.indexcontainer
 			main
-				h1 All Events
+				h1 Events
 				each event in events
 					each user in users
 						if event.userId===user.id
@@ -111,9 +111,9 @@ html
 						br
 						br
 						h3 Where is the event?
-						div#locationField
-							input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
 						table#address
+							div#locationField
+								input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
 							tr
 								td.label Street address
 								td.slimField
@@ -135,7 +135,7 @@ html
 								td.label Country
 								td.wideField(colspan='3')
 									input#locality.field(disabled='true' name='city' required)
-							input.submit(type= 'submit' value= "Submit your post!")
+						input.submit(type= 'submit' value= "Submit your post!")
 				else
 					h2 Log in to sign up and comment on events!
 			footer

@@ -285,7 +285,7 @@ app.get('/myevent', (req,res) =>{
 	    					where: {
 	    						userId: user.id
 	    					},
-	    				include: [{
+	    					include: [{
 			    				model: Comment,
 			    				as: 'comments'
 			    			}]
@@ -313,21 +313,26 @@ app.post('/specificevent', (req,res)=>{
 	if (user === undefined) {
         res.redirect('/login?message=' + encodeURIComponent("Please log in to view the vent you clicked!"));
     } else {
-	Event.findOne({
-		where: {
-			title: req.body.event.title
-		},
-		include: [{
-			model: Comment,
-			as: "comments"
-		}]
-	}).then((event)=>{
-		User.findAll({include: [{
-			model: Picture
+    	console.log("This is req.body.event: ")
+    	console.log(req.body.event) // Here I get this: {"id":1,"title":"Pizza baking workshop","description":"Make awesome pizza!","address":"John M. Keynesplein","street_number":"12","city":"Amsterdam","state":"NH","postal":"1098 DZ","country":"Nederland","date":"Tomorrow","time":"10:30","createdAt":"2017-06-16T14:06:18.420Z","updatedAt":"2017-06-16T14:06:18.420Z","userId":2}
+		console.log("this is the event id: " + req.body.eventId)
+		Event.findOne({
+			where: {
+				id: req.body.eventId // But here I get null?!
+			},
+			include: [{
+				model: Comment,
+				as: "comments"
+			}]
+		})
+		.then((event)=>{
+			User.findAll({include: [{
+				model: Picture
 		}]})
-	}).then((users)=>{
+		.then((users)=>{
 			Announce.findAll()
 				.then((announces)=>{
+					console.log("Does this work?" + event);
 					res.render('public/views/event', {
 						events: event,
 						users: users,
@@ -335,6 +340,7 @@ app.post('/specificevent', (req,res)=>{
 					})
 				})
 				.then().catch(error=> console.log(error))
+		})
 		})
 	}
 })

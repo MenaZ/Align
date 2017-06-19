@@ -45,6 +45,8 @@ html
 						.recentevents
 							each event in events
 								form(method="post" action="/specificevent")
-									input(type= "submit" name="event" value=event.title) 
+									input(type="hidden" value=event.id, name="eventId")
+									input(type= "submit" value=event.title + " in " + event.city) 
+								br
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
