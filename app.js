@@ -111,7 +111,7 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 		})
 		.then((user) => {
 			if(user !== null && req.body.email=== user.email) {
-        		res.redirect('/?message=' + encodeURIComponent("Email already exists!"));
+        		res.redirect('/login?message=' + encodeURIComponent("Email already exists!"));
 				return;
 			} else {
 				bcrypt.hash(req.body.password, null, null, (err, hash) =>{
@@ -141,16 +141,18 @@ app.post('/register', bodyParser.urlencoded({extended:true}), (req, res) => {
 });
 
 app.get('/login', (req, res)=> {
-	res.render('public/views/login')
+	res.render('public/views/login', {
+		message: req.query.message,
+	})
 })
 
 app.post('/login', (req, res) => {
 	if(req.body.email.length ===0) {
-		res.redirect('/?message=' + encodeURIComponent("Invalid email"));
+		res.redirect('/login?message=' + encodeURIComponent("Invalid email"));
 		return;
 	}
 	if(req.body.password.length ===0) {
-		res.redirect('/?message=' + encodeURIComponent("Invalid password"));
+		res.redirect('/login?message=' + encodeURIComponent("Invalid password"));
 		return;
 	}
 	User.findOne({
@@ -159,7 +161,7 @@ app.post('/login', (req, res) => {
 		}
 	}).then((user) => { //This part needs fixing, when the email is not in the database it should not pass on, it will yield errors.
 		if(user === null) {
-        	res.redirect('/?message=' + encodeURIComponent("Does not exist!"));
+        	res.redirect('/login?message=' + encodeURIComponent("Does not exist!"));
 			return;
 		}
 		bcrypt.compare(req.body.password, user.password, (err, data)=>{
@@ -167,33 +169,37 @@ app.post('/login', (req, res) => {
 					throw err;
 			} else {
 				if(user !== null && data === true) {
-					req.session.user = user;
+					loggedInUser= user;
+					req.session.user = loggedInUser;
 					res.redirect('/profile');
 				} else {
-					res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
+					res.redirect('/login?message=' + encodeURIComponent("Invalid email or password."));
 				}
 			}
 		});
 	}), (error)=> {
-		res.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
+		res.redirect('/login?message=' + encodeURIComponent("Invalid email or password."));
 	};
 });
 
 app.get('/profile', (req, res)=> {
     var user = req.session.user;
     if (user === undefined) {
-        res.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
+        res.redirect('/login?message=' + encodeURIComponent("Please log in to view your profile."));
     } else {
     	Picture.findOne({
     		where: {
     			userId: user.id
     		}
     	}).then((picture)=>{
-    		console.log(picture)
-    		res.render('public/views/profile', {
-            	user: user,
-            	picture: picture
-        	});
+    		Event.findAll()
+    			.then((events)=>{
+    				res.render('public/views/profile', {
+		            	user: user,
+		            	picture: picture,
+		            	events: events
+		        	});
+    			})
     	}).then().catch((error)=> console.log(error))
     }
 });
@@ -201,10 +207,8 @@ app.get('/profile', (req, res)=> {
 app.post('/picture', (req,res)=>{
 	var user= req.session.user;
 	if (user===undefined) {
-		res.redirect('/?message=' + encodeURIComponent("Be logged in to upload an image."));
+		res.redirect('/login?message=' + encodeURIComponent("Be logged in to upload an image."));
 	} else {
-		console.log("This is req.files: ")
-		console.log(req.files)
 		if(!req.files) {
 			return res.status(400).send('No files were uploaded.');
 		} else {
@@ -217,8 +221,6 @@ app.post('/picture', (req,res)=>{
 				} else {
 					Picture.sync({force:false}) //Now it seems you can upload a picture only once, but the whole database will be reset. This need extension to change the link in the database if there is already a photo uploaded.
 						.then(()=>{
-							console.log("This is picturelink: ")
-							console.log(picturelink)
 							return Picture.create({
 								picture: databaseLink,
 								userId: user.id
@@ -255,7 +257,8 @@ app.get('/event', (req,res) =>{
 		    					res.render('public/views/event', {
 		    						events: events,
 		    						users: users,
-		    						announces: announces
+		    						announces: announces,
+		    						loggedInUser: req.session.user
 		    						})
 		    				})
 		    		})
@@ -264,13 +267,53 @@ app.get('/event', (req,res) =>{
     	.then().catch(error=> console.log(error))
 });
 
+app.get('/myevent', (req,res) =>{
+	var user = req.session.user;
+	if (user === undefined) {
+        res.redirect('/login?message=' + encodeURIComponent("Please log in to view your events!"));
+    }
+    else {
+	    Event.sync()
+	    	.then(()=>{
+	    		User.findAll({include: [{
+	    			model: Picture,
+	    			// as: 'pictures'
+	    		}]})
+	    			.then((users)=>{
+	    				Event.findAll({
+	    					where: {
+	    						userId: user.id
+	    					},
+	    				include: [{
+			    				model: Comment,
+			    				as: 'comments'
+			    			}]
+			    			// ,
+			    			// order: '"updatedAt" DESC'
+			    		})
+			    		.then((events)=>{
+			    			Announce.findAll()
+			    				.then((announces)=>{
+			    					res.render('public/views/event', {
+			    						events: events,
+			    						users: users,
+			    						announces: announces
+			    						})
+			    				})
+			    		})
+	    			})
+	    	})
+	    	.then().catch(error=> console.log(error))
+	}
+});
+
 app.post('/event', (req,res) => {
 	var user = req.session.user;
 	if(req.body.description.length===0 || req.body.title.length===0) {
 		res.end('You forgot your title or message!');
 		return
 	} else if (user === undefined) {
-        res.redirect('/?message=' + encodeURIComponent("Please log in to post events!"));
+        res.redirect('/login?message=' + encodeURIComponent("Please log in to post events!"));
     } else {
 		Event.sync()
 			.then()
@@ -305,9 +348,8 @@ app.post('/comment', (req,res)=>{
 		res.end('You forgot your comment!')
 	}
 	else {
-
-	if(req.body.body.length===0) {
-		res.end('You forgot your comment!')
+		if(req.body.comment.length===0) {
+			res.end('You forgot your comment!')
 	} else {
 		Comment.sync()
 			.then()
@@ -333,7 +375,7 @@ app.post('/comment', (req,res)=>{
 app.post('/announce', (req, res) => {
 	var user = req.session.user;
 	if (user===undefined) {
-		res.redirect('/?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
+		res.redirect('/login?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
 		return
 	}
 	var eventId = req.body.eventId; 
@@ -369,7 +411,7 @@ app.get('/logout', (req, res)=> {
         if(error) {
             throw error;
         }
-        res.redirect('/?message=' + encodeURIComponent("Successfully logged out."));
+        res.redirect('/login?message=' + encodeURIComponent("Successfully logged out."));
     })
 });
 

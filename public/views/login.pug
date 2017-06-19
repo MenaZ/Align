@@ -28,23 +28,27 @@ html
 						a(href='/about') About
 					div
 						a(href='/contact') Contact Us
-            
 			div.indexcontainer
 				main
 					h1 Please Login:
 					form#loginform(action='/login' method='post')
+						h2(style="color: red") #{message} 
+						br
 						label Email:
+						br
 						br
 						input.box(id='email' name='email' placeholder='Your Email' maxlength='35' required)
 						br
+						br
 						label Password:
+						br
 						br
 						input.box(type='password' id='password' name='password' maxlength='35' placeholder='Your Password' required)
 						br
 						br
 						br
+						br
 						input.submit(type='submit' value='Login!' id='submit')
 					h2#error-message= post
-      
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
