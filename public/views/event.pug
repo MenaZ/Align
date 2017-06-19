@@ -185,12 +185,23 @@ html
 						tr
 							td.label Country
 							td.wideField(colspan='3')
-								input#country.field(disabled='true' name='country' required)
-					input(type= 'submit' value= "Submit your post!")
-			else 
-				h2 Log in to sign up and comment on events!
-				script
-					include ../js/event.js
-				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
-		footer
-			h4 &copy; 2017 Align Inc. All rights reserved.
+								input#locality.field(disabled='true' name='city' required)
+							tr
+								td.label State
+								td.slimField
+									input#administrative_area_level_1.field(disabled='true' name='state' required)
+								td.label Postal Code
+								td.wideField
+									input#postal_code.field(disabled='true' name='postal' required)
+							tr
+								td.label Country
+								td.wideField(colspan='3')
+									input#country.field(disabled='true' name='country' required)
+						input.submit(type= 'submit' value= "Submit your post!")
+        else 
+				    h2 Log in to sign up and comment on events!
+				footer
+					h4 &copy; 2017 Align Inc. All rights reserved.
+		script
+			include ../js/event.js
+		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
