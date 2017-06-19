@@ -85,17 +85,16 @@ html
 									br
 									input(type="hidden" name = "userId" value= user.id )
 									br
-
 									input.submit(type='submit' value='Sign up to go to this event!')
-								br
-								br
-								form(action='/comment' method='post')
-									h4 Comment:
-									textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-									input(type='hidden' name='eventId' value= event.id)
 									br
 									br
-									input.submit(type='submit' value='Submit your comment!')
+							form(action='/comment' method='post')
+								h4 Comment:
+								textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+								input(type='hidden' name='eventId' value= event.id)
+								br
+								br
+								input.submit(type='submit' value='Submit your comment!')
 					else
 						h2 You haven't posted anything yet!
 					h2 Post your awesome event!
