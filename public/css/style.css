@@ -1,7 +1,7 @@
 html {
 	height: 100%;
 	width: 100%;
-	background-color: blue;
+	background-color: darkblue;
 	background: #1e5799; /* Old browsers */
 	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
 	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
@@ -25,14 +25,8 @@ html {
 }
 
 body {
-<<<<<<< HEAD
-	background-color: #5998ff;
-/*	overflow: hidden;
-*/	color: white;
-=======
-	overflow: hidden;
 	color: white;
->>>>>>> 214b743882588fc36050626cbe50e3f06fee32e6
+	overflow: hidden;
 }
 
 .container {
