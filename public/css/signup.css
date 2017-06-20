@@ -1,43 +1,70 @@
-* {
-	
-	font-size: px;
-	font-weight: bold;
-	margin: 10px;
+html {
+	height: 100%;
+	background-color: darkblue;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+}
+
+.container {
+	background-color: darkblue;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+}
+
+body {
+	overflow: auto;
+	height: 100%;
+}
+
+main h2 {
+	margin-top: 30px;
 	text-align: center;
+	color: #122647;
 }
 
-main h1 {
-	font-size: 50px;
-	text-align: : right;
-	margin: 10px;
-	text-align: left;
-
-}
-
-main p {
-    margin-top: 20px;
-	font-size: 100px;
-	padding: 10px;
-}
-
-.container { 
-	font-size: 10 px;
-	padding: 5px;
-
-}
 .input {
-
-	font-size: 30px;
+	font-size: 20px;
 	text-align: center;
-	border: 1px solid blue;
-	border-radius: 20px;
-	width: 30%;
-	margin-top: 20px;
-	margin-bottom: 0px;
-	padding: 15px;
+	border: 1px solid #133d6d;
+	border-radius: 10px;
+	width: 50%;
+	padding: 30px;
 }
 
 .input:focus {
 	background-color: #adccff;
 }
 
+form {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.submit {
+	margin-left: 310px;
+	margin-bottom: 20px;
+	display: block;
+	text-align: ;
+	background-color: #5d3ded;
+	cursor: pointer;
+	color: #122647;
+	font-size: 20px;
+	border: 1px solid #133d6d;
+	border-radius: 10px;
+	width: 50%;
+	margin-top: 30px;
+	padding: 20px;
+}
+
+.textarea {
+	padding: 10px;
+	text-align: left;
+}
+
+footer {
+	margin-top: 20px;
+}

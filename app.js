@@ -74,7 +74,7 @@ Announce.belongsTo(Event);*/
 Picture.belongsTo(User);
 User.hasOne(Picture);
 
-sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
@@ -291,7 +291,7 @@ app.get('/myevent', (req,res) =>{
 	    					where: {
 	    						userId: user.id
 	    					},
-	    				include: [{
+	    					include: [{
 			    				model: Comment,
 			    				as: 'comments'
 			    			}]
@@ -319,21 +319,29 @@ app.post('/specificevent', (req,res)=>{
 	if (user === undefined) {
         res.redirect('/login?message=' + encodeURIComponent("Please log in to view the vent you clicked!"));
     } else {
-	Event.findOne({
-		where: {
-			title: req.body.event.title
-		},
-		include: [{
-			model: Comment,
-			as: "comments"
-		}]
-	}).then((event)=>{
-		User.findAll({include: [{
-			model: Picture
+		Event.findOne({
+			where: {
+				id: req.body.eventId
+			},
+			include: [{
+				model: Comment,
+				as: "comments"
+			}]
+		})
+		.then((event)=>{
+			User.findAll({include: [{
+				model: Picture
 		}]})
+<<<<<<< HEAD
 	}).then((users)=>{
 			announce.findAll()
+=======
+		.then((users)=>{
+			Announce.findAll()
+>>>>>>> 8027633699a666e1e0908e0535fe3ccf8462e4a6
 				.then((announces)=>{
+					console.log(event)
+					console.log(users)
 					res.render('public/views/event', {
 						events: event,
 						users: users,
@@ -341,6 +349,7 @@ app.post('/specificevent', (req,res)=>{
 					})
 				})
 				.then().catch(error=> console.log(error))
+		})
 		})
 	}
 })
@@ -450,7 +459,7 @@ app.get('/logout', (req, res)=> {
         if(error) {
             throw error;
         }
-        res.redirect('/login?message=' + encodeURIComponent("Successfully logged out."));
+        res.redirect('/?message=' + encodeURIComponent("Successfully logged out."));
     })
 });
 
