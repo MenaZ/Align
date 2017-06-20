@@ -27,7 +27,7 @@ main h2 {
 }
 
 .input {
-	font-size: 15px;
+	font-size: 20px;
 	text-align: center;
 	border: 1px solid #133d6d;
 	border-radius: 10px;
@@ -35,8 +35,8 @@ main h2 {
 	padding: 30px;
 }
 
-.input {
-
+.input:focus {
+	background-color: #adccff;
 }
 
 form {
