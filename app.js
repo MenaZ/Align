@@ -51,7 +51,7 @@ var Comment = sequelize.define('comment', {
 	body: Sequelize.STRING
 })
 
-var Announce = sequelize.define('announce')
+//var Announce = sequelize.define('announce')
 
 var Picture = sequelize.define('pictures', {
 	picture: Sequelize.STRING
@@ -64,10 +64,13 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
-User.hasMany(Announce);
-Announce.belongsTo(User);
-Event.hasMany(Announce);
-Announce.belongsTo(Event);
+User.belongsToMany(Event, { as: "participant", through: 'user_event', foreignKey: 'eventId' }); //participants
+Event.belongsToMany(User, { through: 'user_event', foreignKey: 'userId' }); //particpants
+Event.belongsTo(User, {as: "organizedBy", foreignKey: 'organizedById'}) //created event
+User.hasMany(Event,  {foreignKey: 'organizedById'});
+/*Announce.belongsTo(User);
+*//*Event.hasMany(Announce);
+Announce.belongsTo(Event);*/
 Picture.belongsTo(User);
 User.hasOne(Picture);
 
@@ -244,24 +247,27 @@ app.get('/event', (req,res) =>{
     			// as: 'pictures'
     		}]})
     			.then((users)=>{
-    				Event.findAll({include: [{
-		    				model: Comment,
-		    				as: 'comments'
-		    			}]
+    				Event.findAll({include: [
+    						{model: Comment,as: 'comments'},
+		    				{model: User, as: organizedBy},
+		    				{model: User}
+		    			]
 		    			// ,
 		    			// order: '"updatedAt" DESC'
 		    		})
 		    		.then((events)=>{
-		    			Announce.findAll()
-		    				.then((announces)=>{
-		    					console.log(events);
-		    					res.render('public/views/event', {
-		    						events: events,
-		    						users: users,
-		    						announces: announces,
-		    						loggedInUser: req.session.user
-		    						})
-		    				})
+		    			Event.findAll({
+		    				include: [model: User]
+		    			})
+	    				.then((announces)=>{
+	    					console.log(events);
+	    					res.render('public/views/event', {
+	    						events: events,
+	    						users: users,
+	    						announces: announces,
+	    						loggedInUser: req.session.user
+	    						})
+	    				})
 		    		})
     			})
     	})
@@ -293,7 +299,7 @@ app.get('/myevent', (req,res) =>{
 			    			// order: '"updatedAt" DESC'
 			    		})
 			    		.then((events)=>{
-			    			Announce.findAll()
+			    			announce.findAll()
 			    				.then((announces)=>{
 			    					res.render('public/views/event', {
 			    						events: events,
@@ -326,8 +332,13 @@ app.post('/specificevent', (req,res)=>{
 			User.findAll({include: [{
 				model: Picture
 		}]})
+<<<<<<< HEAD
+	}).then((users)=>{
+			announce.findAll()
+=======
 		.then((users)=>{
 			Announce.findAll()
+>>>>>>> 8027633699a666e1e0908e0535fe3ccf8462e4a6
 				.then((announces)=>{
 					console.log(event)
 					console.log(users)
@@ -414,13 +425,14 @@ app.post('/announce', (req, res) => {
 		res.redirect('/login?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
 		return
 	}
+
 	var eventId = req.body.eventId; 
-			Announce.sync()
+			announce.sync()
 			.then(function(){
-				Announce.findAll()
+				announce.findAll()
 				.then(announces=> {
 					console.log(announces);
-					return Announce.create({
+					return announce.create({
 						eventId: eventId,
 						userId: user.id
 					})
