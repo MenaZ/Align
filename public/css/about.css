@@ -25,12 +25,12 @@ main p {
 	text-align: left;
 }
 #logo {
-    position: center
-    display: inline;
-    height: 200px;
-    width: 200px;
-    z-index: 20;
-    padding: 70px;
+ 
+   /** height: 300px;
+    width: 300px;
+    z-index: 20; */
+    padding: 30px;
+    margin-top: 30px;
 }
 .container { 
 	font-size: 30 px;
@@ -39,9 +39,10 @@ main p {
 	float: right;
 	border-radius: 10px;
 	text-decoration: none;
-	color: white;
+	color: ;
 	padding: 5px 10px;
 	margin-right: 10px;
+	margin-top: 35px;
 
 	
 }
