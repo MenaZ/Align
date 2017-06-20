@@ -46,6 +46,7 @@ html
 							each event in events
 								form(method="post" action="/specificevent")
 									input(type="hidden" value=event.id, name="eventId")
+									input(type="hidden" value=event.userId, name="userId")
 									input(type= "submit" value=event.title + " in " + event.city) 
 								br
 			footer
