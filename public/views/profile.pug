@@ -41,7 +41,7 @@ html
 								input.uploadimg(type='submit' value="Load up your image")
 
 					.recentevents
-						h2 Most recent events:
+						h2 Most recent events
 						each event in events
 							form(method="post" action="/specificevent")
 								input.event(type= "submit" name="event" value=event.title) 
