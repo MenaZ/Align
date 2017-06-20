@@ -106,9 +106,9 @@ html
 							br
 							br
 							h3 Where is the event?
+							div#locationField
+								input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
 							table#address
-								div#locationField
-									input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
 								tr
 									td.label Street address
 									td.slimField
