@@ -69,6 +69,8 @@ html
 									console.log("test")
 									console.log(element)
 									element.parentNode.style.display = 'none'	
+
+									$.post("/declineinvite", userId, function(result) {console.log(test)})
 								}
 								function showAnnounce(someElement) {
 									someElement.parentNode.style.display
