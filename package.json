@@ -1,0 +1,40 @@
+{
+  "name": "alignapp",
+  "version": "1.0.0",
+  "description": "Meet up with people to go to events",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MenaZ/Align.git"
+  },
+  "keywords": [
+    "Events",
+    "Align",
+    "Meet",
+    "up",
+    "Social"
+  ],
+  "author": "Youssef Ouirini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MenaZ/Align/issues"
+  },
+  "homepage": "https://github.com/MenaZ/Align#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-fileupload": "^0.1.3",
+    "express-session": "^1.15.3",
+    "fsevents": "^1.1.2",
+    "nodemon": "^1.11.0",
+    "pg": "^6.2.4",
+    "pg-hstore": "^2.3.2",
+    "pug": "^2.0.0-rc.2",
+    "sequelize": "^4.1.0"
+  },
+  "devDependencies": {}
+}

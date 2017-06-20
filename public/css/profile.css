@@ -1,0 +1,105 @@
+html {
+	height: 100%;
+}
+
+body {
+	overflow: hidden;
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+}
+
+img {
+	display: block;
+	margin-top: 40px;
+	margin-left: 40px;
+	border: 1px solid #133d6d;
+	border-radius: 100px;
+	height: 300px;
+	width: 300px;
+}
+
+.upload {
+	display: inline-block;
+	padding: 15px;
+	border: 1px solid #133d6d;
+	background-color: rgba(81, 141, 194, 0.8);
+	border-radius: 10px;
+	margin: 30px;
+}
+
+.upload h3 {
+	margin-bottom: 10px;
+}
+
+.uploadimg {
+	margin-top: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.buttons {
+	position: absolute;
+	margin: 10px 405px;
+}
+
+main h2 {
+	margin: 20px;
+	margin-top: 50px;
+}
+
+section {
+	position: relative;
+	bottom: 430px;
+	float: right;
+}
+
+section h2 {
+	text-align: right;
+}
+
+.recentevents {
+	position: absolute;
+	left: 770px;
+	bottom: 70px;
+	border: 1px solid #133d6d;
+	background-color: rgba(81, 141, 194, 0.8);
+	padding: 20px;
+	margin: 0 20px;
+	width: 36%;
+	height: 60%;
+	overflow-y: auto;
+}
+
+.recentevents h2 {
+	margin: 0;
+	display: inline-block;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #133d6d;
+}
+
+.event {
+	margin-top: 5px;
+	padding: 5px;
+}
+
+.eventsbutton {
+	font-size: 28px;
+	padding: 20px;
+	display: inline-block;
+	text-align: center;
+	margin: 20px auto;
+	width: 50%;
+	float: left;
+}
+
+footer {
+	margin-top: 70px;
+	text-align: right;
+	position: absolute;
+	bottom: 40px;
+	left: 530px;
+	margin-top: 50px;
+}

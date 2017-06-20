@@ -1,0 +1,78 @@
+body {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.container {
+
+}
+
+#logo {
+    position: absolute;
+    display: inline;
+    height: 500px;
+    width: 500px;
+    z-index: 20;
+}
+
+.logo {
+    color: transparent;
+}
+
+.fullscreen-bg {
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.fullscreen-video {
+	opacity: 0.5;
+    position: absolute;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    height: 60%;
+}
+
+.indexcontainer {
+    position: relative;
+    bottom: 25px;
+    margin-left: 490px;
+    text-align: center;
+    color: white;
+}
+
+.indexcontainer h1 {
+    color: white;
+    font-size: 180px;
+    margin-top: 100px;
+    margin-right: 500px;
+    font-family: 'Youth Beauty';
+}
+
+.indexcontainer p {
+    font-size: 40px;
+}
+
+.minicontainer {
+    margin-top: 70px;
+    font-size: 18px;
+}
+
+.minicontainer li {
+    list-style-type: none;
+    font-weight: normal;
+    text-align: left; 
+    color: red;
+}
+
+footer {
+    position: relative;
+    bottom: 20px;
+}

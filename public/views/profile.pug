@@ -1,0 +1,51 @@
+html
+	head
+		title My Profile
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/profile.css")
+		
+	body
+		.container
+			header
+				nav
+					div
+						a#logout(href= "/logout") Logout
+					div
+						a(href= "/") Home
+					div
+						a(href= "/profile") Profile
+					div
+						a(href= '/myevent') My Events
+					div
+						a(href='/event') Event Calender
+					div
+						a(href='/about') About
+					div
+						a(href='/contact') Contact Us
+
+			.indexcontainer
+				main
+					h1 #{user.firstname}'s Profile		
+					h2 Welcome to your profile #{user.firstname}!
+					.buttons
+						a.eventsbutton(href='/event') Click here to view all events!
+						a.eventsbutton(href='/myevent') Click to view all the events you posted!
+					if picture
+						img(id="profilepicture" src=picture.picture)
+					else
+						.upload
+							h3 Upload your profile picture!
+							form(method="post" action="/picture" encType="multipart/form-data")
+								input(type='file' name="picture" accept="image/jpg")
+								br
+								input.uploadimg(type='submit' value="Load up your image")
+
+					.recentevents
+						h2 Most recent events
+						each event in events
+							form(method="post" action="/specificevent")
+								input(type="hidden" name="eventId" value=event.id)
+								input(type="hidden" name="userId" value=event.userId)
+								input.event(type= "submit" value=event.title) 
+			footer
+				h4 &copy; 2017 Align Inc. All rights reserved.
