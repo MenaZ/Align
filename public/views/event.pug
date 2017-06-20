@@ -56,7 +56,10 @@ html
 									each user in users
 										if comment.userId === user.id
 											h4 #{user.firstname} #{user.lastname} commented:
-											p #{comment.body}	
+											p #{comment.body}
+								each participant in participants
+									if participant.eventId === event.id
+										h4 #{particpant} is going to event!	
 								each announce in announces
 									each user in users
 										if loggedInUser
@@ -64,7 +67,14 @@ html
 												h2#username #{user.firstname} wants to go with you!
 													form(action='/accept' method="post")
 														input(type='submit' value='Accept this person!' id="show")
-														input(type='submit' value='This person stinks!' id="hide")
+														input(type='hidden' name="accept" value=1)
+														input(type="hiden" name="eventId" value=event.id)
+														input(type="hidden" name="userId" value=loggedInUser.id)
+														br
+													form(action='/accept' method='post')
+														input(type='submit' name="nyet" value='This person stinks!' id="hide")
+														input(type="hiden" name="eventId" value=event.id)
+														input(type="hidden" name="userId" value=loggedInUser.id)
 														br
 								if loggedInUser
 									form#join(action='/announce' method="post")
