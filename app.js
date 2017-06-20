@@ -64,9 +64,9 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
-User.belongsToMany(Event, { through: 'announce', foreignKey: 'eventId' });
-Event.belongsToMany(User, { through: 'announce', foreignKey: 'userId' });
-Event.belongsTo(User, {as: "organizedBy", foreignKey: 'organizedById'})
+User.belongsToMany(Event, { as: "participant", through: 'user_event', foreignKey: 'eventId' }); //participants
+Event.belongsToMany(User, { through: 'user_event', foreignKey: 'userId' }); //particpants
+Event.belongsTo(User, {as: "organizedBy", foreignKey: 'organizedById'}) //created event
 User.hasMany(Event,  {foreignKey: 'organizedById'});
 /*Announce.belongsTo(User);
 *//*Event.hasMany(Announce);
@@ -247,24 +247,27 @@ app.get('/event', (req,res) =>{
     			// as: 'pictures'
     		}]})
     			.then((users)=>{
-    				Event.findAll({include: [{
-		    				model: Comment,
-		    				as: 'comments'
-		    			}]
+    				Event.findAll({include: [
+    						{model: Comment,as: 'comments'},
+		    				{model: User, as: organizedBy},
+		    				{model: User}
+		    			]
 		    			// ,
 		    			// order: '"updatedAt" DESC'
 		    		})
 		    		.then((events)=>{
-		    			announce.findAll()
-		    				.then((announces)=>{
-		    					console.log(events);
-		    					res.render('public/views/event', {
-		    						events: events,
-		    						users: users,
-		    						announces: announces,
-		    						loggedInUser: req.session.user
-		    						})
-		    				})
+		    			Event.findAll({
+		    				include: [model: User]
+		    			})
+	    				.then((announces)=>{
+	    					console.log(events);
+	    					res.render('public/views/event', {
+	    						events: events,
+	    						users: users,
+	    						announces: announces,
+	    						loggedInUser: req.session.user
+	    						})
+	    				})
 		    		})
     			})
     	})
