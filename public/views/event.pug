@@ -36,22 +36,27 @@ html
 							a(href='/about') About
 						div
 							a(href='/contact') Contact Us
-
 			.indexcontainer
 				main
+<<<<<<< HEAD
 					h1 Events
 					each event in events 
+=======
+					h1 All Events
+					each event in events
+>>>>>>> 8027633699a666e1e0908e0535fe3ccf8462e4a6
 						each user in users
 							if event.userId===user.id
 								if user.picture
 									img(src= user.picture.picture, width="200")
 								else
 									img(id="profilepicture" src='../img/profile/default.jpg')
-								h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
-								h3 #{event.title}
-								p Description: #{event.description}
-								p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
-								p Date: #{event.date} at #{event.time}
+								h2.titleEvent #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
+								.eventDescription
+									h3 #{event.title}
+									p Description: #{event.description}
+									p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
+									p Date: #{event.date} at #{event.time}
 								each comment in event.comments
 									each user in users
 										if comment.userId === user.id
@@ -60,22 +65,14 @@ html
 								each announce in announces
 									each user in users
 										if loggedInUser
-											if user.id=== announce.userId 
-												h2.username #{user.firstname} wants to go with you!
-														input(type='submit' value='Accept this person!' class="show" onclick="showAnnounce(this)")
-														input(type='submit' value='This person stinks!' class="hide" onclick="hideAnnounce(this)")
+											if user.id=== announce.userId && loggedInUser.id === event.userId
+												h2#username #{user.firstname} wants to go with you!
+													form(action='/accept' method="post")
+														input(type='submit' value='Accept this person!' id="show")
+														input(type='submit' value='This person stinks!' id="hide")
 														br
-								script.
-									function hideAnnounce(element) {
-										console.log("test")
-										console.log(element)
-										element.parentNode.style.display = 'none'	
-									}
-									function showAnnounce(someElement) {
-										someElement.parentNode.style.display
-									}
 								if loggedInUser
-									form(action='/announce' method="post")
+									form#join(action='/announce' method="post")
 										input(type="hidden"  name = "eventId" value= event.id)
 										br
 										input(type="hidden" name = "userId" value= loggedInUser.id )
@@ -83,16 +80,31 @@ html
 										input.submit(type='submit' value='Sign up to go to this event!')
 										br
 										br
-									form(action='/comment' method='post')
+									form#comments(action='/comment' method='post')
 										h4 Comment:
-										textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+										textarea(name= 'comment' id='comment' placeholder= 'Post your comment!' maxlength="380" required)
 										input(type='hidden' name='eventId' value= event.id)
 										br
 										br
 										input.submit(type='submit' value='Submit your comment!')
 								br
+								script.
+									function hideAnnounce(element) {
+										console.log("test")
+										console.log(element)
+										element.parentNode.style.display = 'none'	
+									}
+									//- $(document).ready(function(){
+									//- 	$(".hide").map().click(function(){
+									//- 		$(".username").hide();
+									//- 	})
+									//- 	$(".show").click(function(){
+									//- 		$(".username").show();
+									//- 	});
+									//- })		
 					if loggedInUser
-						h2 Post your awesome event!
+						h2 New Event
+						p With the following form you can create a new event. Do you know of any fun adventures for you and your potential future friends? 
 						form(action='/event' method='post')
 							h3 Title:
 							input(name= 'title' id='title' placeholder= 'Type your title' required)
@@ -117,8 +129,8 @@ html
 										input#route.field(disabled='true' name='address' required)
 								tr
 									td.label City
-								td.wideField(colspan='3')
-									input#locality.field(disabled='true' name='city' required)
+									td.wideField(colspan='3')
+										input#locality.field(disabled='true' name='city' required)
 								tr
 									td.label State
 									td.slimField
@@ -130,14 +142,11 @@ html
 									td.label Country
 									td.wideField(colspan='3')
 										input#locality.field(disabled='true' name='city' required)
-							input.submit(type= 'submit' value= "Submit your post!")
+							input.submitevent(type= 'submit' value= "Submit your event!")
 					else
 						h2 Log in to sign up and comment on events!
 				footer
 					h4 &copy; 2017 Align Inc. All rights reserved.
-
-			
-
 		script
 			include ../js/event.js
 		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')

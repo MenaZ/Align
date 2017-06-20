@@ -1,5 +1,14 @@
+html {
+	height: 100%;
+}
+
 body {
 	overflow: hidden;
+	height: 100%;
+}
+
+.container {
+	height: 100%;
 }
 
 img {
@@ -19,6 +28,16 @@ img {
 	background-color: rgba(81, 141, 194, 0.8);
 	border-radius: 10px;
 	margin: 30px;
+}
+
+.upload h3 {
+	margin-bottom: 10px;
+}
+
+.uploadimg {
+	margin-top: 10px;
+	padding: 5px;
+	cursor: pointer;
 }
 
 .buttons {
@@ -41,19 +60,29 @@ section h2 {
 	text-align: right;
 }
 
-section .recentevents {
-	position: relative;
+.recentevents {
+	position: absolute;
+	left: 770px;
+	bottom: 70px;
 	border: 1px solid #133d6d;
 	background-color: rgba(81, 141, 194, 0.8);
 	padding: 20px;
-	width: 460px;
-	height: 300px;
+	margin: 0 20px;
+	width: 36%;
+	height: 60%;
 	overflow-y: auto;
 }
 
-.recentevents input {
-	padding: 5px 5px;
-	margin: 5px 0;
+.recentevents h2 {
+	margin: 0;
+	display: inline-block;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #133d6d;
+}
+
+.event {
+	margin-top: 5px;
+	padding: 5px;
 }
 
 .eventsbutton {
@@ -63,13 +92,14 @@ section .recentevents {
 	text-align: center;
 	margin: 20px auto;
 	width: 50%;
+	float: left;
 }
 
 footer {
 	margin-top: 70px;
 	text-align: right;
-	/*position: absolute;
+	position: absolute;
 	bottom: 40px;
 	left: 530px;
-	margin-top: 50px;*/
+	margin-top: 50px;
 }
