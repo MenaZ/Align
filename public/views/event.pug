@@ -58,8 +58,9 @@ html
 											h4 #{user.firstname} #{user.lastname} commented:
 											p #{comment.body}
 								each participant in participants
-									if participant.eventId === event.id
-										h4 #{particpant} is going to event!	
+									each user in users
+										if participant.eventId === event.id && participant.userId === user.id
+											h4 #{user.firstname} is going to this event!	
 								each announce in announces
 									each user in users
 										if loggedInUser
