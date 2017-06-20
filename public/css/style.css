@@ -1,3 +1,13 @@
+html {
+	height: 100%;
+	width: 100%;
+	background-color: darkblue;
+	background: #1e5799; /* Old browsers */
+	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
+}
+
 @font-face {
 	font-family: 'Gotham Book Regular';
 	src: url('../fonts/Gotham Book Regular.otf');
@@ -15,14 +25,8 @@
 }
 
 body {
-	background: #1e5799; /* Old browsers */
-	background: -webkit-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: -o-linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background: linear-gradient(#1e5799 0%, #207cca 29%, #2989d8 50%, #7db9e8 100%);
-	background-repeat: no-repeat;
-	background-size: cover;
-	overflow: hidden;
 	color: white;
+	overflow: hidden;
 }
 
 .container {
@@ -34,16 +38,13 @@ body {
 	font-size: 50px;
 	font-weight: bold;
 	margin-left: 10px;
-	color: blue;
+	color: #122647;
+	z-index: 10;
 }
 
 header nav div {
 	display: inline-block;
 }
-
-/*header {
-	display: block;
-}*/
 
 nav {
 	float: right;
@@ -64,15 +65,7 @@ a:hover {
 }
 
 footer {
-	position: relative;
-	bottom: 58px;
-	left: 920px;
-	display: inline-block;
 	text-align: center;
-	background-color: blue;
-	padding: 20px;
-	z-index: 2;
-	color: white;
 }
 
 footer h4 {
@@ -80,5 +73,5 @@ footer h4 {
 }
 
 #logout {
-	background-color: darkblue;
+	background-color: black;
 }

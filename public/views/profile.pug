@@ -3,6 +3,7 @@ html
 		title My Profile
 		link(rel="stylesheet" href="../css/style.css")
 		link(rel="stylesheet" href="../css/profile.css")
+		
 	body
 		.container
 			header
@@ -14,7 +15,7 @@ html
 					div
 						a(href= "/profile") Profile
 					div
-						a(href= '/event') My Events
+						a(href= '/myevent') My Events
 					div
 						a(href='/event') Event Calender
 					div
@@ -22,20 +23,31 @@ html
 					div
 						a(href='/contact') Contact Us
 
-			main
-				h1 #{user.firstname}'s Profile		
-				h2 Welcome to your profile #{user.firstname}!
-				h3
-					a(href='/event') Click here to view all events!
-				h3
-					a(href='/myevents') Click to view all the events you posted!
-				if picture
-					img(id="profilepicture" src=picture.picture)
-				else
-					h3 Upload or change your profile picture!
-					form(method="post" action="/picture" encType="multipart/form-data")
-						input(type='file' name="picture" accept="image/jpg")
-						br
-						input(type='submit' value="Load up your image")
+			.indexcontainer
+				main
+					h1 #{user.firstname}'s Profile		
+					h2 Welcome to your profile #{user.firstname}!
+					.buttons
+						a.eventsbutton(href='/event') Click here to view all events!
+						a.eventsbutton(href='/myevent') Click to view all the events you posted!
+					if picture
+						img(id="profilepicture" src=picture.picture)
+					else
+						.upload
+							h3 Upload your profile picture!
+							form(method="post" action="/picture" encType="multipart/form-data")
+								input(type='file' name="picture" accept="image/jpg")
+								br
+								input(type='submit' value="Load up your image")
+
+					section
+						h2 Most recent events:
+						.recentevents
+							each event in events
+								form(method="post" action="/specificevent")
+									input(type="hidden" value=event.id, name="eventId")
+									input(type="hidden" value=event.userId, name="userId")
+									input(type= "submit" value=event.title + " in " + event.city) 
+								br
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.

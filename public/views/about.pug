@@ -6,7 +6,7 @@ html
 		.container
 			header
 				nav
-				if user 
+				if loggedInUser 
 					div
 						a#logout(href= "/logout") Logout
 					div
@@ -14,7 +14,7 @@ html
 					div
 						a(href= "/profile") Profile
 					div
-						a(href= '/event') My Events
+						a(href= '/myevent') My Events
 					div
 						a(href='/event') Event Calender
 					div

@@ -1,100 +1,143 @@
 html
 	head
 		title Events
-		link(rel="stylesheet" href="../css/.css")
-		style
-			include ../css/event.css
+		link(rel="stylesheet" href="../css/style.css")
+		link(rel="stylesheet" href="../css/event.css")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 	body
-		header
-			nav
-				div
-					a#logout(href= "/logout") Logout
-				div
-					a(href= "/") Home
-				div
-					a(href= "/profile") Profile
-				div
-					a(href= '/event') My Events
-				div
-					a(href='/about') About
-				div
-					a(href='/contact') Contact Us
+		.container
+			header
+				nav
+					if loggedInUser 
+						div
+							a#logout(href= "/logout") Logout
+						div
+							a(href= "/") Home
+						div
+							a(href= "/profile") Profile
+						div
+							a(href= '/myevent') My Events
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
+					else
+						div
+							a(href= "/") Home
+						div
+							a(href='/event') Event Calender
+						div
+							a(href='/login') Login
+						div
+							a(href='/register') Register
+						div
+							a(href='/about') About
+						div
+							a(href='/contact') Contact Us
 
-		main
-			h1 All Events
-			each event in events
-				each user in users
-					if event.userId===user.id
-						h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
-						h3 #{event.title}
-						p Description: #{event.description}
-						p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
-						p Date: #{event.date} at #{event.time}
-						each comment in event.comments
-							each user in users
-								if comment.userId === user.id
-									h4 #{user.firstname} #{user.lastname} commented:
-									p #{comment.body}
-						each announce in announces
-							h2 #{announce.eventId} #{announce.userId}
-								form(action='/announce' method="post")
-									input(type="hidden"  name = "eventId" value= event.id)
-									br
-									input(type="hidden" name = "userId" value= user.id )
-									br
-									input(type='submit' value='Accept your event')
+			.indexcontainer
+				main
+					h1 Events
+					each event in events 
+						each user in users
+							if event.userId===user.id
+								if user.picture
+									img(src= user.picture.picture, width="200")
+								else
+									img(id="profilepicture" src='../img/profile/default.jpg')
+								h2 #{user.firstname} #{user.lastname} posted at #{event.createdAt}:
+								h3 #{event.title}
+								p Description: #{event.description}
+								p Location: #{event.address} #{event.street_number} #{event.city} #{event.state} #{event.country}
+								p Date: #{event.date} at #{event.time}
+								each comment in event.comments
+									each user in users
+										if comment.userId === user.id
+											h4 #{user.firstname} #{user.lastname} commented:
+											p #{comment.body}	
+								each announce in announces
+									each user in users
+										if loggedInUser
+											if user.id=== announce.userId 
+												h2.username #{user.firstname} wants to go with you!
+														input(type='submit' value='Accept this person!' class="show" onclick="showAnnounce(this)")
+														input(type='submit' value='This person stinks!' class="hide" onclick="hideAnnounce(this)")
+														br
+								script.
+									function hideAnnounce(element) {
+										console.log("test")
+										console.log(element)
+										element.parentNode.style.display = 'none'	
+									}
+									function showAnnounce(someElement) {
+										someElement.parentNode.style.display
+									}
+								if loggedInUser
+									form(action='/announce' method="post")
+										input(type="hidden"  name = "eventId" value= event.id)
+										br
+										input(type="hidden" name = "userId" value= loggedInUser.id )
+										br
+										input.submit(type='submit' value='Sign up to go to this event!')
+										br
+										br
+									form(action='/comment' method='post')
+										h4 Comment:
+										textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
+										input(type='hidden' name='eventId' value= event.id)
+										br
+										br
+										input.submit(type='submit' value='Submit your comment!')
+								br
+					if loggedInUser
+						h2 Post your awesome event!
+						form(action='/event' method='post')
+							h3 Title:
+							input(name= 'title' id='title' placeholder= 'Type your title' required)
+							h3 Describe this event:
+							textarea(name= 'description' id='description' placeholder= 'Type your message' required)
+							h3 When is this event?
+							input(type='date' name='date' placeholder='Type in the date' required)
+							br
+							br
+							input(type='time' name='time' placeholder='Type in the time' required)
+							br
+							br
+							h3 Where is the event?
+							div#locationField
+								input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
+							table#address
+								tr
+									td.label Street address
+									td.slimField
+										input#street_number.field(disabled='true' name='street_number' required)
+									td.wideField(colspan='2')
+										input#route.field(disabled='true' name='address' required)
+								tr
+									td.label City
+								td.wideField(colspan='3')
+									input#locality.field(disabled='true' name='city' required)
+								tr
+									td.label State
+									td.slimField
+										input#administrative_area_level_1.field(disabled='true' name='state' required)
+									td.label Postal Code
+									td.wideField
+										input#postal_code.field(disabled='true' name='postal' required)
+								tr
+									td.label Country
+									td.wideField(colspan='3')
+										input#locality.field(disabled='true' name='city' required)
+							input.submit(type= 'submit' value= "Submit your post!")
+					else
+						h2 Log in to sign up and comment on events!
+				footer
+					h4 &copy; 2017 Align Inc. All rights reserved.
 
-								form(action='/comment' method='post')
-									h4 Comment:
-									textarea(name= 'comment' id='comment' placeholder= 'Post your comment!')
-									input(type='hidden' name='eventId' value= event.id)
-									br
-									br
-									input(type='submit' value='Submit your comment!')
-			else
-				h2 You haven't posted anything yet!
-			h2 Post your awesome event!
-			form(action='/event' method='post')
-				h3 Title:
-				input(name= 'title' id='title' placeholder= 'Type your title' required)
-				h3 Describe this event:
-				textarea(name= 'description' id='description' placeholder= 'Type your message' required)
-				h3 When is this event?
-				input(type='date' name='date' placeholder='Type in the date' required)
-				br
-				br
-				input(type='time' name='time' placeholder='Type in the time' required)
-				br
-				br
-				h3 Where is the event?
-				div#locationField
-					input#autocomplete(placeholder='Enter the address of the event', onfocus='geolocate()', type='text')
-				table#address
-					tr
-						td.label Street address
-						td.slimField
-							input#street_number.field(disabled='true' name='street_number' required)
-						td.wideField(colspan='2')
-							input#route.field(disabled='true' name='address' required)
-					tr
-						td.label City
-					td.wideField(colspan='3')
-						input#locality.field(disabled='true' name='city' required)
-					tr
-						td.label State
-						td.slimField
-							input#administrative_area_level_1.field(disabled='true' name='state' required)
-						td.label Postal Code
-						td.wideField
-							input#postal_code.field(disabled='true' name='postal' required)
-					tr
-						td.label Country
-						td.wideField(colspan='3')
-							input#country.field(disabled='true' name='country' required)
-				input(type= 'submit' value= "Submit your post!")
-				
-				script
-					include ../js/event.js
-				script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
-		footer
-			h4 &copy; 2017 Align Inc. All rights reserved.
+			
+
+		script
+			include ../js/event.js
+		script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyYvipIi-QZlx3XqBNKKKAXzZqLhkBG0&libraries=places&callback=initAutocomplete', async='', defer='')
