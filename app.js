@@ -51,7 +51,7 @@ var Comment = sequelize.define('comment', {
 	body: Sequelize.STRING
 })
 
-//var Announce = sequelize.define('announce')
+var Announce = sequelize.define('announce')
 
 var Participant = sequelize.define('participant')
 
@@ -254,10 +254,7 @@ app.get('/event', (req,res) =>{
     		}]})
     			.then((users)=>{
     				Event.findAll({include: [
-    						{model: Comment,as: 'comments'},
-		    				{model: User, as: organizedBy},
-		    				{model: User}
-		    			]
+    						{model: Comment,as: 'comments'}]
 		    			// ,
 		    			// order: '"updatedAt" DESC'
 		    		})
@@ -305,7 +302,7 @@ app.get('/myevent', (req,res) =>{
 			    			// order: '"updatedAt" DESC'
 			    		})
 			    		.then((events)=>{
-			    			announce.findAll()
+			    			Announce.findAll()
 			    				.then((announces)=>{
 			    					Participant.findAll()
 			    					.then((participants)=>{
