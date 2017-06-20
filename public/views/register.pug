@@ -22,48 +22,49 @@ html
 				main
 					h1 Sign Up
 					h2 Please use the following form to sign up for a new account:
-					form(method="post" action="/register")
-						label First name:
-						br
-						br
-						input.input(type="text" class="form-control" placeholder="Your first name..." name="firstname" required)
-						br
-						br
-						label Last name:
-						br
-						br
-						input.input(type="text" class="form-control" placeholder="Your last name..." name="lastname" required)
-						br
-						br
-						label Email:
-						br
-						br
-						input.input(type="email" class="form-control" placeholder="Your email.." name="email" required)
-						br
-						br
-						label Age:
-						br
-						br
-						input.input(type="number" class="form-control" placeholder="Your age..." name="age" min="1" max="130" required)
-						br
-						br
-						label Gender:
-						br
-						br
-						input.input(type="text" class="form-control" placeholder="Your gender..." name="gender" required)
-						br
-						br
-						label Password:
-						br
-						br
-						input.input(type="password" class="form-control" placeholder="Your password..." name="password" required)
-						br
-						br
-						label My favorite things to do:
-						br
-						br
-						textarea.input.textarea(name="aboutme", placeholder="My favorite things...", rows="4", cols="50", class="message" maxlength="270" required)
-						button.submit(type="submit" class="btn-default") Submit
+					.form
+						form(method="post" action="/register")
+							label First name:
+							br
+							br
+							input.input(type="text" class="form-control" placeholder="Your first name..." name="firstname" required)
+							br
+							br
+							label Last name:
+							br
+							br
+							input.input(type="text" class="form-control" placeholder="Your last name..." name="lastname" required)
+							br
+							br
+							label Email:
+							br
+							br
+							input.input(type="email" class="form-control" placeholder="Your email.." name="email" required)
+							br
+							br
+							label Age:
+							br
+							br
+							input.input(type="number" class="form-control" placeholder="Your age..." name="age" min="1" max="130" required)
+							br
+							br
+							label Gender:
+							br
+							br
+							input.input(type="text" class="form-control" placeholder="Your gender..." name="gender" required)
+							br
+							br
+							label Password:
+							br
+							br
+							input.input(type="password" class="form-control" placeholder="Your password..." name="password" required)
+							br
+							br
+							label My favorite things to do:
+							br
+							br
+							textarea.input.textarea(name="aboutme", placeholder="My favorite things...", rows="4", cols="50", class="message" maxlength="270" required)
+							button.submit(type="submit" class="btn-default") Submit
 
 				footer
 					h4 &copy; 2017 Align Inc. All rights reserved.
