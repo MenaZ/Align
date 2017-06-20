@@ -71,7 +71,7 @@ Announce.belongsTo(Event);
 Picture.belongsTo(User);
 User.hasOne(Picture);
 
-sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
@@ -332,7 +332,7 @@ app.post('/specificevent', (req,res)=>{
 					console.log(event)
 					console.log(users)
 					res.render('public/views/event', {
-						events: event,
+						events: [event],
 						users: users,
 						announces: announces
 					})
