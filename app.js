@@ -447,7 +447,7 @@ app.get('/logout', (req, res)=> {
         if(error) {
             throw error;
         }
-        res.redirect('/login?message=' + encodeURIComponent("Successfully logged out."));
+        res.redirect('/?message=' + encodeURIComponent("Successfully logged out."));
     })
 });
 
