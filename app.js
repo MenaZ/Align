@@ -71,7 +71,7 @@ Announce.belongsTo(Event);
 Picture.belongsTo(User);
 User.hasOne(Picture);
 
-sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
