@@ -51,7 +51,7 @@ var Comment = sequelize.define('comment', {
 	body: Sequelize.STRING
 })
 
-var Announce = sequelize.define('announce')
+//var Announce = sequelize.define('announce')
 
 var Participant = sequelize.define('participant')
 
@@ -66,10 +66,13 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
-User.hasMany(Announce);
-Announce.belongsTo(User);
-Event.hasMany(Announce);
-Announce.belongsTo(Event);
+User.belongsToMany(Event, { as: "participant", through: 'user_event', foreignKey: 'eventId' }); //participants
+Event.belongsToMany(User, { through: 'user_event', foreignKey: 'userId' }); //particpants
+Event.belongsTo(User, {as: "organizedBy", foreignKey: 'organizedById'}) //created event
+User.hasMany(Event,  {foreignKey: 'organizedById'});
+/*Announce.belongsTo(User);
+*//*Event.hasMany(Announce);
+Announce.belongsTo(Event);*/
 Picture.belongsTo(User);
 User.hasOne(Picture);
 Event.hasMany(Participant);
@@ -250,10 +253,11 @@ app.get('/event', (req,res) =>{
     			// as: 'pictures'
     		}]})
     			.then((users)=>{
-    				Event.findAll({include: [{
-		    				model: Comment,
-		    				as: 'comments'
-		    			}]
+    				Event.findAll({include: [
+    						{model: Comment,as: 'comments'},
+		    				{model: User, as: organizedBy},
+		    				{model: User}
+		    			]
 		    			// ,
 		    			// order: '"updatedAt" DESC'
 		    		})
@@ -301,7 +305,7 @@ app.get('/myevent', (req,res) =>{
 			    			// order: '"updatedAt" DESC'
 			    		})
 			    		.then((events)=>{
-			    			Announce.findAll()
+			    			announce.findAll()
 			    				.then((announces)=>{
 			    					Participant.findAll()
 			    					.then((participants)=>{
@@ -432,13 +436,14 @@ app.post('/announce', (req, res) => {
 		res.redirect('/login?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
 		return
 	}
+
 	var eventId = req.body.eventId; 
-			Announce.sync()
+			announce.sync()
 			.then(function(){
-				Announce.findAll()
+				announce.findAll()
 				.then(announces=> {
 					console.log(announces);
-					return Announce.create({
+					return announce.create({
 						eventId: eventId,
 						userId: user.id
 					})
