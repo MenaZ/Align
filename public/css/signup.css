@@ -4,6 +4,7 @@
 	font-weight: bold;
 	margin: 10px;
 	text-align: center;
+	overflow: auto;
 }
 
 main h1 {
