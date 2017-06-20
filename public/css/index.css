@@ -36,12 +36,16 @@ body {
     height: 60%;
 }
 
-.indexcontainer {
+/*.indexcontainer {
     position: relative;
     bottom: 25px;
     margin-left: 490px;
     text-align: center;
     color: white;
+}*/
+
+.indexcontainer {
+    margin-left: 450px;
 }
 
 .indexcontainer h1 {
@@ -57,7 +61,8 @@ body {
 }
 
 .minicontainer {
-    margin-top: 70px;
+
+    margin-top: 80px;
     font-size: 18px;
     text-align: right;
 }
@@ -70,5 +75,6 @@ body {
 }
 
 footer {
-    text-align: left;
+    margin-top: 10px;
+    text-align: center;
 }
