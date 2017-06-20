@@ -38,13 +38,12 @@ html
 							form(method="post" action="/picture" encType="multipart/form-data")
 								input(type='file' name="picture" accept="image/jpg")
 								br
-								input(type='submit' value="Load up your image")
+								input.uploadimg(type='submit' value="Load up your image")
 
-					section
+					.recentevents
 						h2 Most recent events:
-						.recentevents
-							each event in events
-								form(method="post" action="/specificevent")
-									input(type= "submit" name="event" value=event.title) 
+						each event in events
+							form(method="post" action="/specificevent")
+								input.event(type= "submit" name="event" value=event.title) 
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
