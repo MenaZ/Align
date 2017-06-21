@@ -8,9 +8,18 @@
 
 }*/
 
+body{
+	overflow: visible;
+}
+
+
 main h1 {
 	font-size: 50px;
-	margin: 10px;
+	text-align: left;
+	color: #122647;
+}
+main h2{
+    margin: 10px;
 	text-align: left;
 	color: #122647;
 }
@@ -18,38 +27,24 @@ main h1 {
 main h3 {
 	text-align: center;
 	font-size: 35px;
+	margin-top: 40px;
 }
 
 main p {
     margin-top: 20px;
 	font-size: 18px;
 	padding: 10px;
-	text-align: left;
-}
-
-#logo {
-	position: relative;
-	left: 90px;
-	top: 20px;
- 	border: 1px solid blue;
-    margin-left:100px;
-    padding: 30px;
-    margin-top: 60px;
-    padding: 20px;
+	width: 70%;
+    text-align: left;
 
 }
-.container { 
-	font-size: 30 px;
-	padding: 20px;
-	text-align: right;
-	float: right;
-	border-radius: 10px;
-	text-decoration: none;
-	padding: 5px 10px;
-	margin-right: 10px;
-	margin-top: 35px;
+.img {
+	content: url(../img/Placeholderlogo.png);
+	height:150px;
+	width:150px;
+	margin-left:700px;
+
 	
-}
 
 
 
