@@ -53,6 +53,8 @@ var Comment = sequelize.define('comment', {
 
 var Announce = sequelize.define('announce')
 
+var Participant = sequelize.define('participant')
+
 var Picture = sequelize.define('pictures', {
 	picture: Sequelize.STRING
 })
@@ -64,14 +66,21 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 Event.hasMany(Comment);
 Comment.belongsTo(Event);
-User.hasMany(Announce);
-Announce.belongsTo(User);
-Event.hasMany(Announce);
-Announce.belongsTo(Event);
+User.belongsToMany(Event, { as: "participant", through: 'user_event', foreignKey: 'eventId' }); //participants
+Event.belongsToMany(User, { through: 'user_event', foreignKey: 'userId' }); //particpants
+Event.belongsTo(User, {as: "organizedBy", foreignKey: 'organizedById'}) //created event
+User.hasMany(Event,  {foreignKey: 'organizedById'});
+/*Announce.belongsTo(User);
+*//*Event.hasMany(Announce);
+Announce.belongsTo(Event);*/
 Picture.belongsTo(User);
 User.hasOne(Picture);
+Event.hasMany(Participant);
+Participant.belongsTo(Event);
+User.hasMany(Participant);
+Participant.belongsTo(User)
 
-sequelize.sync({force: true}) //Change false to true to wipe clean the whole database.
+sequelize.sync({force: false}) //Change false to true to wipe clean the whole database.
 
 // Creates session when user logs in
 app.use(session({
@@ -244,22 +253,22 @@ app.get('/event', (req,res) =>{
     			// as: 'pictures'
     		}]})
     			.then((users)=>{
-    				Event.findAll({include: [{
-		    				model: Comment,
-		    				as: 'comments'
-		    			}]
+    				Event.findAll({include: [
+    						{model: Comment,as: 'comments'}]
 		    			// ,
 		    			// order: '"updatedAt" DESC'
 		    		})
 		    		.then((events)=>{
 		    			Announce.findAll()
 		    				.then((announces)=>{
-		    					console.log(events);
-		    					res.render('public/views/event', {
-		    						events: events,
-		    						users: users,
-		    						announces: announces,
-		    						loggedInUser: req.session.user
+		    					Participant.findAll()
+		    						.then((participants)=>{
+		    							res.render('public/views/event', {
+				    						events: events,
+				    						users: users,
+				    						announces: announces,
+				    						participants:participants
+		    							})
 		    						})
 		    				})
 		    		})
@@ -295,11 +304,16 @@ app.get('/myevent', (req,res) =>{
 			    		.then((events)=>{
 			    			Announce.findAll()
 			    				.then((announces)=>{
-			    					res.render('public/views/event', {
-			    						events: events,
-			    						users: users,
-			    						announces: announces
-			    						})
+			    					Participant.findAll()
+			    					.then((participants)=>{
+		    							res.render('public/views/event', {
+				    						events: events,
+				    						users: users,
+				    						announces: announces,
+				    						participants:participants
+		    							})
+		    						})
+			    					
 			    				})
 			    		})
 	    			})
@@ -322,24 +336,29 @@ app.post('/specificevent', (req,res)=>{
 				as: "comments"
 			}]
 		})
-		.then((event)=>{
+		.then((events)=>{
 			User.findAll({include: [{
 				model: Picture
 		}]})
 		.then((users)=>{
 			Announce.findAll()
 				.then((announces)=>{
-					console.log(event)
-					console.log(users)
-					res.render('public/views/event', {
-						events: event,
-						users: users,
-						announces: announces
-					})
+					Participant.findAll()
+						.then((participants)=> {
+							console.log(events)
+							res.render('public/views/event', {
+							events: [events],
+							users: users,
+							announces: announces,
+							participants: participants
+							})
+
+					})					
 				})
-				.then().catch(error=> console.log(error))
+				
 		})
 		})
+		.then().catch(error=> console.log(error))
 	}
 })
 
@@ -414,13 +433,14 @@ app.post('/announce', (req, res) => {
 		res.redirect('/login?message=' + encodeURIComponent("Be logged in to sign up to go to an event!"));
 		return
 	}
+
 	var eventId = req.body.eventId; 
-			Announce.sync()
+			announce.sync()
 			.then(function(){
-				Announce.findAll()
+				announce.findAll()
 				.then(announces=> {
 					console.log(announces);
-					return Announce.create({
+					return announce.create({
 						eventId: eventId,
 						userId: user.id
 					})
@@ -439,7 +459,28 @@ app.post('/announce', (req, res) => {
 })
 
 app.post('/accept', (req, res) => {
-	res.redirect('/event')
+	var user = req.session.user
+	console.log(req.body.accept)
+	if (req.body.accept !== undefined){
+		Participant.sync()
+			.then(()=>{
+				return Participant.create({
+					eventId: req.body.eventId,
+					userId: user.id
+				})
+			})
+				.then(()=>{
+					res.redirect('/event')
+				})
+				.then().catch(error=> console.log(error))
+	} 
+	Announce.destroy({
+		where: {userId: req.body.userId,
+				eventId: req.body.eventId}
+	})
+		.then (()=>{
+			res.redirect('/event')
+		})
 })
 
 app.get('/logout', (req, res)=> {

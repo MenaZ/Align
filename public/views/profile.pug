@@ -44,6 +44,8 @@ html
 						h2 Most recent events
 						each event in events
 							form(method="post" action="/specificevent")
-								input.event(type= "submit" name="event" value=event.title) 
+								input(type="hidden" name="eventId" value=event.id)
+								input(type="hidden" name="userId" value=event.userId)
+								input.event(type= "submit" value=event.title) 
 			footer
 				h4 &copy; 2017 Align Inc. All rights reserved.
