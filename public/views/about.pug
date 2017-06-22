@@ -8,7 +8,7 @@ html
 			
 			header
 				nav
-					if user 
+					if loggedInUser 
 						div
 							a#logout(href= "/logout") Logout
 						div
@@ -30,17 +30,17 @@ html
 							a(href='/event') Event Calender
 						div
 							a(href='/login') Login
-						
+						div
+							a(href='/register') Register
 						div
 							a(href='/about') About
 						div
 							a(href='/contact') Contact Us
 
 			.indexcontainer
-				 
-					
+
 				main
-					div.img
+					img(src="../img/Placeholderlogo.png")
 					h1 About 
 
 					.content
@@ -49,9 +49,10 @@ html
 
 						h2  How align works
 						p  Think back to a moment in your life when you really wanted to participate in some kind of activity or event but you didnt know anyone in your immediate network that you thought would be interested in joining you. Thats why we have created Align! So how does it work? Well, you sign up, can browse events and then get matched to someone with the same event interests. If its a mutual 'Yes' then you can proceed to go for a meet up and get Aligned with new friends in your city.
-				
-						h3  Get Aligned!	
-						br
 
-			footer
-				p &copy; 2017 Align Inc. All rights reserved.
+						h3
+							a.button(href="/register") Get Aligned!
+							br
+
+				footer
+					p &copy; 2017 Align Inc. All rights reserved.
